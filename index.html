@@ -1,0 +1,5560 @@
+ <!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#090807">
+<title>WANTED — Pizza & Burger | Eskişehir</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&family=Oswald:wght@300;400;500;600;700&family=Special+Elite&display=swap" rel="stylesheet">
+
+<style>
+/* =========================================================
+   WANTED PIZZA BURGER
+   CINEMATIC WESTERN / EDITORIAL EXPERIENCE
+   SINGLE FILE
+========================================================= */
+
+:root{
+  --bg:#080706;
+  --bg2:#0d0a08;
+  --bg3:#15100d;
+  --paper:#eee2cc;
+  --paper2:#cdbb9b;
+  --white:#fffaf0;
+  --red:#841c16;
+  --red2:#b52b20;
+  --red3:#4f0e0b;
+  --gold:#b99a64;
+  --muted:rgba(238,226,204,.58);
+  --muted2:rgba(238,226,204,.25);
+  --line:rgba(238,226,204,.14);
+  --line2:rgba(238,226,204,.07);
+  --ease:cubic-bezier(.16,1,.3,1);
+  --ease2:cubic-bezier(.77,0,.18,1);
+  --shadow:0 30px 100px rgba(0,0,0,.45);
+}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html{
+  scroll-behavior:smooth;
+  background:var(--bg);
+}
+
+body{
+  background:var(--bg);
+  color:var(--paper);
+  font-family:"DM Sans",sans-serif;
+  overflow-x:hidden;
+  cursor:none;
+}
+
+body.locked{
+  overflow:hidden;
+}
+
+::selection{
+  background:var(--red);
+  color:white;
+}
+
+a{
+  color:inherit;
+  text-decoration:none;
+}
+
+button,
+input{
+  font:inherit;
+}
+
+button{
+  cursor:none;
+}
+
+img{
+  display:block;
+  max-width:100%;
+}
+
+/* =========================================================
+   GRAIN
+========================================================= */
+
+.noise{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:9997;
+  opacity:.045;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode:screen;
+}
+
+.vignette{
+  position:fixed;
+  inset:0;
+  z-index:9996;
+  pointer-events:none;
+  background:
+    radial-gradient(circle at center,transparent 42%,rgba(0,0,0,.2) 100%);
+}
+
+/* =========================================================
+   CURSOR
+========================================================= */
+
+.cursor-dot{
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  position:fixed;
+  z-index:10000;
+  pointer-events:none;
+  background:#fff;
+  transform:translate(-50%,-50%);
+  mix-blend-mode:difference;
+}
+
+.cursor-ring{
+  width:34px;
+  height:34px;
+  border:1px solid rgba(255,255,255,.8);
+  border-radius:50%;
+  position:fixed;
+  z-index:9999;
+  pointer-events:none;
+  transform:translate(-50%,-50%);
+  transition:
+    width .45s var(--ease),
+    height .45s var(--ease),
+    background .45s var(--ease),
+    border-color .45s var(--ease);
+  mix-blend-mode:difference;
+}
+
+.cursor-ring.hover{
+  width:74px;
+  height:74px;
+  background:white;
+  border-color:white;
+}
+
+.cursor-label{
+  position:fixed;
+  z-index:10001;
+  pointer-events:none;
+  transform:translate(-50%,-50%);
+  font-size:7px;
+  letter-spacing:.18em;
+  color:#000;
+  opacity:0;
+  transition:opacity .2s;
+  mix-blend-mode:normal;
+}
+
+.cursor-ring.hover + .cursor-label{
+  opacity:1;
+}
+
+/* =========================================================
+   LOADER
+========================================================= */
+
+.loader{
+  position:fixed;
+  inset:0;
+  z-index:11000;
+  background:#070605;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:
+    opacity 1s var(--ease),
+    visibility 1s;
+}
+
+.loader.hide{
+  opacity:0;
+  visibility:hidden;
+}
+
+.loader-inner{
+  width:min(500px,80%);
+  text-align:center;
+}
+
+.loader-brand{
+  font-family:"Bebas Neue";
+  font-size:clamp(70px,13vw,150px);
+  line-height:.7;
+  letter-spacing:.02em;
+}
+
+.loader-brand span{
+  color:transparent;
+  -webkit-text-stroke:1px var(--paper);
+}
+
+.loader-sub{
+  margin-top:35px;
+  font-family:"Special Elite";
+  font-size:9px;
+  letter-spacing:.35em;
+  color:var(--gold);
+}
+
+.loader-line{
+  height:1px;
+  background:var(--line);
+  margin-top:35px;
+  overflow:hidden;
+}
+
+.loader-progress{
+  width:0%;
+  height:100%;
+  background:var(--paper);
+  animation:load 2.1s var(--ease) forwards;
+}
+
+@keyframes load{
+  0%{width:0}
+  100%{width:100%}
+}
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+.nav{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:82px;
+  z-index:8000;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 4vw;
+  color:white;
+  mix-blend-mode:difference;
+  transition:
+    transform .6s var(--ease),
+    opacity .6s var(--ease);
+}
+
+.nav.hidden{
+  transform:translateY(-100%);
+}
+
+.brand{
+  font-family:"Bebas Neue";
+  font-size:31px;
+  line-height:.75;
+  letter-spacing:.07em;
+}
+
+.brand small{
+  display:block;
+  font-family:"DM Sans";
+  font-size:7px;
+  font-weight:500;
+  letter-spacing:.45em;
+  margin-top:7px;
+}
+
+.nav-links{
+  display:flex;
+  align-items:center;
+  gap:35px;
+}
+
+.nav-links a{
+  position:relative;
+  font-size:9px;
+  text-transform:uppercase;
+  letter-spacing:.2em;
+}
+
+.nav-links a:after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:-8px;
+  width:0;
+  height:1px;
+  background:white;
+  transition:width .5s var(--ease);
+}
+
+.nav-links a:hover:after{
+  width:100%;
+}
+
+.nav-order{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  border:1px solid rgba(255,255,255,.35);
+  padding:11px 17px;
+  font-size:8px;
+  letter-spacing:.17em;
+  text-transform:uppercase;
+  transition:.4s var(--ease);
+}
+
+.nav-order:hover{
+  background:white;
+  color:#000;
+}
+
+.mobile-toggle{
+  display:none;
+  width:43px;
+  height:43px;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,.5);
+  background:transparent;
+  color:white;
+  font-size:14px;
+}
+
+/* =========================================================
+   MOBILE MENU
+========================================================= */
+
+.mobile-menu{
+  position:fixed;
+  inset:0;
+  z-index:7900;
+  background:#080706;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transform:translateY(-100%);
+  transition:transform .8s var(--ease);
+}
+
+.mobile-menu.open{
+  transform:translateY(0);
+}
+
+.mobile-menu-links{
+  display:flex;
+  flex-direction:column;
+  gap:20px;
+  text-align:center;
+}
+
+.mobile-menu-links a{
+  font-family:"Bebas Neue";
+  font-size:65px;
+  line-height:.8;
+}
+
+/* =========================================================
+   GENERAL
+========================================================= */
+
+section{
+  position:relative;
+}
+
+.section-wrap{
+  width:min(1400px,90%);
+  margin:auto;
+}
+
+.eyebrow{
+  font-family:"Special Elite";
+  font-size:9px;
+  color:var(--gold);
+  letter-spacing:.3em;
+  text-transform:uppercase;
+}
+
+.display{
+  font-family:"Bebas Neue";
+  font-weight:400;
+  text-transform:uppercase;
+}
+
+.outline{
+  color:transparent;
+  -webkit-text-stroke:1px rgba(238,226,204,.75);
+}
+
+.red{
+  color:var(--red2);
+}
+
+.muted{
+  color:var(--muted);
+}
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero{
+  min-height:100svh;
+  overflow:hidden;
+  background:
+    linear-gradient(
+      90deg,
+      #070605 0%,
+      rgba(7,6,5,.93) 26%,
+      rgba(7,6,5,.38) 58%,
+      rgba(7,6,5,.05) 100%
+    ),
+    linear-gradient(
+      0deg,
+      #080706 0%,
+      transparent 20%,
+      transparent 80%,
+      #080706 100%
+    ),
+    url("https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=2400&q=92")
+    center/cover;
+}
+
+.hero-image{
+  position:absolute;
+  inset:0;
+  overflow:hidden;
+}
+
+.hero-image:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(circle at 73% 50%,rgba(164,33,22,.18),transparent 27%),
+    linear-gradient(90deg,rgba(0,0,0,.8),transparent 58%);
+}
+
+.hero-content{
+  position:relative;
+  z-index:3;
+  width:min(1400px,90%);
+  min-height:100svh;
+  margin:auto;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding-top:60px;
+}
+
+.hero-kicker{
+  display:flex;
+  align-items:center;
+  gap:15px;
+  margin-bottom:30px;
+  opacity:0;
+  transform:translateY(20px);
+  animation:heroIn 1s .15s var(--ease) forwards;
+}
+
+.hero-kicker i{
+  width:50px;
+  height:1px;
+  background:var(--gold);
+}
+
+.hero-kicker span{
+  font-family:"Special Elite";
+  color:var(--gold);
+  font-size:10px;
+  letter-spacing:.27em;
+}
+
+.hero-title{
+  font-family:"Bebas Neue";
+  font-size:clamp(125px,18.2vw,285px);
+  line-height:.62;
+  letter-spacing:-.025em;
+  width:max-content;
+  max-width:100%;
+}
+
+.hero-title .line{
+  display:block;
+  opacity:0;
+  transform:translateY(80px);
+  animation:heroTitle 1.15s var(--ease) forwards;
+}
+
+.hero-title .line:nth-child(1){animation-delay:.3s}
+.hero-title .line:nth-child(2){animation-delay:.43s}
+.hero-title .line:nth-child(3){animation-delay:.56s}
+
+.hero-title .outline{
+  color:transparent;
+  -webkit-text-stroke:1px rgba(238,226,204,.75);
+}
+
+.hero-copy{
+  width:390px;
+  max-width:90%;
+  margin:45px 0 0 9%;
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.9;
+  opacity:0;
+  transform:translateY(25px);
+  animation:heroIn 1s .85s var(--ease) forwards;
+}
+
+.hero-actions{
+  margin:30px 0 0 9%;
+  display:flex;
+  gap:12px;
+  opacity:0;
+  transform:translateY(20px);
+  animation:heroIn 1s 1s var(--ease) forwards;
+}
+
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:48px;
+  padding:0 23px;
+  border:1px solid rgba(238,226,204,.35);
+  font-size:8px;
+  text-transform:uppercase;
+  letter-spacing:.22em;
+  transition:
+    background .4s var(--ease),
+    color .4s var(--ease),
+    transform .4s var(--ease),
+    border-color .4s var(--ease);
+}
+
+.btn:hover{
+  transform:translateY(-4px);
+  background:var(--paper);
+  color:#080706;
+  border-color:var(--paper);
+}
+
+.btn-fill{
+  background:var(--paper);
+  color:#080706;
+  border-color:var(--paper);
+}
+
+.btn-fill:hover{
+  background:var(--red2);
+  color:white;
+  border-color:var(--red2);
+}
+
+.hero-stamp{
+  position:absolute;
+  z-index:5;
+  right:7vw;
+  bottom:12vh;
+  width:150px;
+  height:150px;
+  border:1px solid rgba(216,198,169,.65);
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  transform:rotate(-13deg);
+  color:var(--cream);
+  font-family:"Special Elite";
+  font-size:8px;
+  letter-spacing:.16em;
+  line-height:1.7;
+  opacity:0;
+  animation:stampIn 1s 1.1s var(--ease) forwards;
+}
+
+.hero-stamp:before,
+.hero-stamp:after{
+  content:"★";
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+  font-size:14px;
+}
+
+.hero-stamp:before{top:16px}
+.hero-stamp:after{bottom:14px}
+
+.hero-year{
+  position:absolute;
+  z-index:4;
+  right:4vw;
+  top:48%;
+  writing-mode:vertical-rl;
+  font-family:"Oswald";
+  font-size:9px;
+  letter-spacing:.3em;
+  color:rgba(238,226,204,.4);
+}
+
+.hero-scroll{
+  position:absolute;
+  z-index:5;
+  bottom:30px;
+  left:4vw;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  font-size:7px;
+  letter-spacing:.3em;
+  text-transform:uppercase;
+  color:rgba(238,226,204,.55);
+}
+
+.hero-scroll span{
+  width:55px;
+  height:1px;
+  background:rgba(238,226,204,.5);
+}
+
+@keyframes heroIn{
+  to{
+    opacity:1;
+    transform:none;
+  }
+}
+
+@keyframes heroTitle{
+  to{
+    opacity:1;
+    transform:none;
+  }
+}
+
+@keyframes stampIn{
+  from{
+    opacity:0;
+    transform:rotate(-13deg) scale(.6);
+  }
+  to{
+    opacity:1;
+    transform:rotate(-13deg) scale(1);
+  }
+}
+
+/* =========================================================
+   MARQUEE
+========================================================= */
+
+.marquee{
+  overflow:hidden;
+  background:var(--red3);
+  border-top:1px solid rgba(255,255,255,.08);
+  border-bottom:1px solid rgba(255,255,255,.08);
+  padding:17px 0;
+}
+
+.marquee-track{
+  width:max-content;
+  display:flex;
+  animation:marquee 35s linear infinite;
+}
+
+.marquee-item{
+  display:flex;
+  align-items:center;
+  gap:34px;
+  margin-right:34px;
+  white-space:nowrap;
+}
+
+.marquee-item strong{
+  font-family:"Bebas Neue";
+  font-size:28px;
+  font-weight:400;
+  letter-spacing:.08em;
+}
+
+.marquee-item span{
+  font-family:"Special Elite";
+  font-size:9px;
+  color:rgba(255,255,255,.6);
+}
+
+@keyframes marquee{
+  to{transform:translateX(-50%)}
+}
+
+/* =========================================================
+   INTRO STATS
+========================================================= */
+
+.stats{
+  padding:90px 0;
+  background:#0a0807;
+}
+
+.stats-grid{
+  width:min(1300px,90%);
+  margin:auto;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+}
+
+.stat{
+  padding:10px 35px;
+  border-left:1px solid var(--line);
+}
+
+.stat:first-child{
+  border-left:0;
+}
+
+.stat-number{
+  font-family:"Bebas Neue";
+  font-size:75px;
+  line-height:.8;
+}
+
+.stat-label{
+  margin-top:17px;
+  color:var(--muted);
+  font-size:8px;
+  letter-spacing:.25em;
+  text-transform:uppercase;
+}
+
+/* =========================================================
+   STORY
+========================================================= */
+
+.story{
+  min-height:100vh;
+  padding:14vw 0;
+  background:
+    radial-gradient(circle at 15% 50%,rgba(141,29,23,.09),transparent 30%),
+    var(--bg);
+  overflow:hidden;
+}
+
+.story-grid{
+  width:min(1400px,90%);
+  margin:auto;
+  display:grid;
+  grid-template-columns:.9fr 1.1fr;
+  gap:8vw;
+  align-items:center;
+}
+
+.story-number{
+  position:absolute;
+  left:-4vw;
+  top:18%;
+  font-family:"Bebas Neue";
+  font-size:32vw;
+  line-height:.7;
+  color:rgba(238,226,204,.025);
+  pointer-events:none;
+}
+
+.story-photo{
+  height:720px;
+  position:relative;
+  overflow:hidden;
+  background:#16100d;
+}
+
+.story-photo img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  filter:
+    sepia(.22)
+    saturate(.65)
+    contrast(1.12);
+  transform:scale(1.03);
+  transition:transform 1.5s var(--ease);
+}
+
+.story-photo:hover img{
+  transform:scale(1.09);
+}
+
+.story-photo .photo-tag{
+  position:absolute;
+  left:25px;
+  bottom:23px;
+  font-family:"Special Elite";
+  font-size:8px;
+  letter-spacing:.2em;
+  color:white;
+}
+
+.story-photo .photo-border{
+  position:absolute;
+  inset:14px;
+  border:1px solid rgba(255,255,255,.25);
+  pointer-events:none;
+}
+
+.story-content{
+  position:relative;
+  z-index:2;
+}
+
+.story-title{
+  font-family:"Bebas Neue";
+  font-size:clamp(80px,10vw,150px);
+  line-height:.72;
+  margin:25px 0 42px;
+}
+
+.story-content p{
+  max-width:600px;
+  color:var(--muted);
+  font-size:13px;
+  line-height:2;
+  margin-bottom:19px;
+}
+
+.story-quote{
+  margin-top:45px;
+  padding:20px 0 20px 23px;
+  border-left:1px solid var(--red2);
+  font-family:"Special Elite";
+  color:var(--paper2);
+  font-size:12px;
+  line-height:1.8;
+}
+
+/* =========================================================
+   PHILOSOPHY
+========================================================= */
+
+.philosophy{
+  padding:12vw 0;
+  background:#0d0a08;
+  overflow:hidden;
+}
+
+.philosophy-top{
+  width:min(1400px,90%);
+  margin:auto;
+  display:flex;
+  justify-content:space-between;
+  align-items:end;
+  margin-bottom:75px;
+}
+
+.philosophy-title{
+  font-family:"Bebas Neue";
+  font-size:clamp(80px,11vw,170px);
+  line-height:.7;
+}
+
+.philosophy-intro{
+  width:300px;
+  color:var(--muted);
+  font-size:11px;
+  line-height:1.8;
+}
+
+.philosophy-grid{
+  width:min(1400px,90%);
+  margin:auto;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1px;
+  background:var(--line);
+}
+
+.philosophy-card{
+  min-height:390px;
+  padding:45px;
+  background:#0d0a08;
+  position:relative;
+  overflow:hidden;
+  transition:background .5s var(--ease);
+}
+
+.philosophy-card:hover{
+  background:#160f0d;
+}
+
+.philosophy-card-number{
+  font-family:"Oswald";
+  color:var(--gold);
+  font-size:10px;
+}
+
+.philosophy-card h3{
+  font-family:"Bebas Neue";
+  font-size:50px;
+  line-height:.8;
+  margin-top:100px;
+  max-width:200px;
+}
+
+.philosophy-card p{
+  color:var(--muted);
+  font-size:10px;
+  line-height:1.8;
+  margin-top:25px;
+  max-width:270px;
+}
+
+/* =========================================================
+   SECTION TITLE
+========================================================= */
+
+.section-heading{
+  display:flex;
+  justify-content:space-between;
+  align-items:end;
+  border-bottom:1px solid var(--line);
+  padding-bottom:35px;
+  margin-bottom:40px;
+}
+
+.section-heading h2{
+  font-family:"Bebas Neue";
+  font-size:clamp(80px,11vw,170px);
+  line-height:.65;
+  font-weight:400;
+}
+
+.section-heading p{
+  width:280px;
+  color:var(--muted);
+  font-size:10px;
+  line-height:1.8;
+}
+
+/* =========================================================
+   MENU
+========================================================= */
+
+.menu{
+  padding:13vw 0 12vw;
+  background:
+    linear-gradient(rgba(8,7,6,.94),rgba(8,7,6,.98)),
+    url("https://images.unsplash.com/photo-1579751626657-72bc17010498?auto=format&fit=crop&w=2200&q=80")
+    center/cover fixed;
+}
+
+.menu-wrap{
+  width:min(1500px,92%);
+  margin:auto;
+}
+
+.menu-tabs{
+  display:flex;
+  gap:7px;
+  overflow-x:auto;
+  scrollbar-width:none;
+  padding-bottom:15px;
+  margin-bottom:25px;
+}
+
+.menu-tabs::-webkit-scrollbar{
+  display:none;
+}
+
+.menu-tab{
+  flex:none;
+  background:transparent;
+  color:var(--muted);
+  border:1px solid var(--line);
+  padding:12px 18px;
+  text-transform:uppercase;
+  letter-spacing:.16em;
+  font-size:8px;
+  transition:.35s var(--ease);
+}
+
+.menu-tab:hover,
+.menu-tab.active{
+  color:#080706;
+  background:var(--paper);
+  border-color:var(--paper);
+}
+
+.menu-panel{
+  display:grid;
+  grid-template-columns:.72fr 1.45fr .8fr;
+  min-height:720px;
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+}
+
+.menu-side{
+  padding:45px 35px 45px 0;
+  border-right:1px solid var(--line);
+}
+
+.menu-side-number{
+  font-family:"Bebas Neue";
+  font-size:150px;
+  line-height:.6;
+  color:rgba(238,226,204,.055);
+}
+
+.menu-side-copy{
+  margin-top:70px;
+  color:var(--muted);
+  font-size:10px;
+  line-height:1.8;
+}
+
+.menu-center{
+  padding:45px 5vw;
+  position:relative;
+  display:flex;
+  align-items:center;
+}
+
+.menu-center:before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  height:150px;
+  background:linear-gradient(var(--bg),transparent);
+  pointer-events:none;
+  z-index:3;
+}
+
+.menu-center:after{
+  content:"";
+  position:absolute;
+  bottom:0;
+  left:0;
+  right:0;
+  height:150px;
+  background:linear-gradient(transparent,var(--bg));
+  pointer-events:none;
+  z-index:3;
+}
+
+.roller{
+  width:100%;
+  height:540px;
+  overflow:hidden;
+  touch-action:none;
+  user-select:none;
+  cursor:ns-resize;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+
+.roller-item{
+  font-family:"Bebas Neue";
+  text-transform:uppercase;
+  color:rgba(238,226,204,.1);
+  font-size:clamp(35px,4.5vw,73px);
+  line-height:.82;
+  padding:13px 0;
+  transform-origin:left center;
+  transition:
+    color .5s var(--ease),
+    transform .5s var(--ease),
+    font-size .5s var(--ease),
+    opacity .5s;
+}
+
+.roller-item.near{
+  color:rgba(238,226,204,.31);
+}
+
+.roller-item.current{
+  color:var(--paper);
+  font-size:clamp(55px,6.3vw,105px);
+  transform:translateX(0) !important;
+}
+
+.menu-right{
+  padding:45px 0 45px 4vw;
+  border-left:1px solid var(--line);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+
+.product-count{
+  color:var(--gold);
+  font-family:"Special Elite";
+  font-size:9px;
+  letter-spacing:.18em;
+  margin-bottom:25px;
+}
+
+.product-title{
+  font-family:"Bebas Neue";
+  font-size:56px;
+  line-height:.78;
+  margin-bottom:25px;
+}
+
+.product-description{
+  color:var(--muted);
+  font-size:10px;
+  line-height:1.8;
+  min-height:95px;
+  max-width:290px;
+}
+
+.product-prices{
+  margin-top:30px;
+  border-top:1px solid var(--line);
+}
+
+.product-price{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:13px 0;
+  border-bottom:1px solid var(--line);
+  font-size:8px;
+  letter-spacing:.08em;
+}
+
+.product-price strong{
+  font-family:"Oswald";
+  font-size:17px;
+  font-weight:400;
+}
+
+.product-note{
+  margin-top:24px;
+  color:rgba(238,226,204,.3);
+  font-size:7px;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+}
+
+/* =========================================================
+   MENU EXTRAS
+========================================================= */
+
+.menu-notes{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1px;
+  background:var(--line);
+  margin-top:45px;
+}
+
+.menu-note{
+  background:#0b0908;
+  padding:30px;
+}
+
+.menu-note span{
+  color:var(--gold);
+  font-family:"Special Elite";
+  font-size:8px;
+  letter-spacing:.2em;
+}
+
+.menu-note p{
+  margin-top:14px;
+  color:var(--muted);
+  font-size:9px;
+  line-height:1.8;
+}
+
+/* =========================================================
+   PIZZA SIZES
+========================================================= */
+
+.size-section{
+  padding:10vw 0;
+  background:var(--paper);
+  color:#0b0908;
+  overflow:hidden;
+}
+
+.size-inner{
+  width:min(1400px,90%);
+  margin:auto;
+}
+
+.size-heading{
+  display:flex;
+  justify-content:space-between;
+  align-items:end;
+  border-bottom:1px solid rgba(11,9,8,.2);
+  padding-bottom:30px;
+  margin-bottom:55px;
+}
+
+.size-heading h2{
+  font-family:"Bebas Neue";
+  font-size:clamp(80px,11vw,165px);
+  line-height:.65;
+  font-weight:400;
+}
+
+.size-heading p{
+  max-width:300px;
+  font-size:10px;
+  line-height:1.8;
+  opacity:.6;
+}
+
+.size-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:0;
+}
+
+.size-card{
+  min-height:380px;
+  padding:35px;
+  border-left:1px solid rgba(11,9,8,.18);
+  position:relative;
+  transition:
+    background .5s var(--ease),
+    color .5s var(--ease);
+}
+
+.size-card:last-child{
+  border-right:1px solid rgba(11,9,8,.18);
+}
+
+.size-card:hover{
+  background:#0b0908;
+  color:var(--paper);
+}
+
+.size-num{
+  font-family:"Oswald";
+  font-size:9px;
+  opacity:.5;
+}
+
+.size-name{
+  font-family:"Bebas Neue";
+  font-size:65px;
+  line-height:.75;
+  margin-top:75px;
+}
+
+.size-price{
+  position:absolute;
+  bottom:35px;
+  font-family:"Oswald";
+  font-size:25px;
+}
+
+/* =========================================================
+   FOOD FEATURE
+========================================================= */
+
+.food-feature{
+  min-height:90vh;
+  display:flex;
+  align-items:center;
+  overflow:hidden;
+  background:
+    linear-gradient(90deg,#090807 0%,rgba(9,8,7,.92) 35%,rgba(9,8,7,.15) 100%),
+    url("https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=2400&q=90")
+    center/cover;
+}
+
+.food-feature-content{
+  width:min(1400px,90%);
+  margin:auto;
+}
+
+.food-feature h2{
+  font-family:"Bebas Neue";
+  font-size:clamp(95px,14vw,210px);
+  line-height:.62;
+  max-width:900px;
+}
+
+.food-feature-copy{
+  width:370px;
+  max-width:90%;
+  color:var(--muted);
+  font-size:11px;
+  line-height:1.9;
+  margin-top:45px;
+}
+
+/* =========================================================
+   PANZEROTTI
+========================================================= */
+
+.panzerotti{
+  padding:12vw 0;
+  background:#0c0908;
+}
+
+.panzerotti-wrap{
+  width:min(1400px,90%);
+  margin:auto;
+}
+
+.pz-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+}
+
+.pz-card{
+  min-height:560px;
+  position:relative;
+  overflow:hidden;
+  background:#17100d;
+}
+
+.pz-card:nth-child(1){
+  background:
+    linear-gradient(0deg,rgba(0,0,0,.8),transparent 60%),
+    url("https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=1100&q=85")
+    center/cover;
+}
+
+.pz-card:nth-child(2){
+  background:
+    linear-gradient(0deg,rgba(0,0,0,.8),transparent 60%),
+    url("https://images.unsplash.com/photo-1565299507177-b0ac66763828?auto=format&fit=crop&w=1100&q=85")
+    center/cover;
+}
+
+.pz-card:nth-child(3){
+  background:
+    linear-gradient(0deg,rgba(0,0,0,.8),transparent 60%),
+    url("https://images.unsplash.com/photo-1579751626657-72bc17010498?auto=format&fit=crop&w=1100&q=85")
+    center/cover;
+}
+
+.pz-card:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(transparent 40%,rgba(0,0,0,.82));
+}
+
+.pz-content{
+  position:absolute;
+  z-index:2;
+  left:30px;
+  right:30px;
+  bottom:30px;
+}
+
+.pz-number{
+  color:var(--gold);
+  font-family:"Special Elite";
+  font-size:8px;
+  letter-spacing:.2em;
+}
+
+.pz-content h3{
+  font-family:"Bebas Neue";
+  font-size:58px;
+  line-height:.75;
+  margin-top:12px;
+}
+
+.pz-content p{
+  color:rgba(255,255,255,.65);
+  font-size:9px;
+  line-height:1.7;
+  margin-top:18px;
+}
+
+.pz-price{
+  font-family:"Oswald";
+  font-size:20px;
+  margin-top:17px;
+}
+
+/* =========================================================
+   BURGER SHOWCASE
+========================================================= */
+
+.burgers{
+  padding:14vw 0;
+  background:
+    radial-gradient(circle at 80% 50%,rgba(132,28,22,.12),transparent 35%),
+    #080706;
+}
+
+.burger-layout{
+  width:min(1500px,92%);
+  margin:auto;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  min-height:720px;
+  align-items:center;
+  gap:7vw;
+}
+
+.burger-visual{
+  position:relative;
+  height:700px;
+  overflow:hidden;
+}
+
+.burger-visual img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  filter:
+    saturate(.7)
+    contrast(1.15);
+}
+
+.burger-visual:after{
+  content:"WANTED / BURGER DEPT.";
+  position:absolute;
+  left:25px;
+  bottom:22px;
+  font-family:"Special Elite";
+  color:white;
+  font-size:8px;
+  letter-spacing:.2em;
+}
+
+.burger-copy h2{
+  font-family:"Bebas Neue";
+  font-size:clamp(90px,12vw,180px);
+  line-height:.63;
+}
+
+.burger-copy>p{
+  max-width:420px;
+  margin-top:35px;
+  color:var(--muted);
+  font-size:11px;
+  line-height:1.9;
+}
+
+.burger-list{
+  margin-top:45px;
+  border-top:1px solid var(--line);
+}
+
+.burger-row{
+  display:grid;
+  grid-template-columns:45px 1fr auto;
+  gap:15px;
+  align-items:center;
+  padding:20px 0;
+  border-bottom:1px solid var(--line);
+  transition:.4s var(--ease);
+}
+
+.burger-row:hover{
+  padding-left:12px;
+  background:rgba(255,255,255,.02);
+}
+
+.burger-row span:first-child{
+  font-family:"Special Elite";
+  color:var(--gold);
+  font-size:8px;
+}
+
+.burger-row h3{
+  font-family:"Bebas Neue";
+  font-size:28px;
+  font-weight:400;
+}
+
+.burger-row p{
+  color:var(--muted);
+  font-size:8px;
+  margin-top:4px;
+}
+
+.burger-row strong{
+  font-family:"Oswald";
+  font-weight:400;
+  font-size:19px;
+}
+
+/* =========================================================
+   SUFLE
+========================================================= */
+
+.sufle{
+  padding:13vw 0;
+  background:
+    linear-gradient(90deg,rgba(11,8,7,.94),rgba(11,8,7,.45)),
+    url("https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=2200&q=90")
+    center/cover;
+}
+
+.sufle-wrap{
+  width:min(1400px,90%);
+  margin:auto;
+}
+
+.sufle-title{
+  font-family:"Bebas Neue";
+  font-size:clamp(100px,15vw,220px);
+  line-height:.62;
+}
+
+.sufle-description{
+  width:380px;
+  max-width:90%;
+  color:var(--muted);
+  font-size:11px;
+  line-height:1.9;
+  margin:45px 0;
+}
+
+.sufle-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  border-top:1px solid var(--line);
+  border-left:1px solid var(--line);
+}
+
+.sufle-item{
+  min-height:170px;
+  padding:25px;
+  border-right:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+  transition:.4s var(--ease);
+}
+
+.sufle-item:hover{
+  background:rgba(132,28,22,.2);
+}
+
+.sufle-item span{
+  color:var(--gold);
+  font-size:8px;
+  font-family:"Special Elite";
+}
+
+.sufle-item h3{
+  font-family:"Bebas Neue";
+  font-size:27px;
+  line-height:.8;
+  margin-top:40px;
+}
+
+.sufle-price{
+  margin-top:15px;
+  font-family:"Oswald";
+  font-size:14px;
+}
+
+/* =========================================================
+   APERITIF
+========================================================= */
+
+.aperitif{
+  padding:13vw 0;
+  background:var(--paper);
+  color:#090807;
+}
+
+.aperitif-wrap{
+  width:min(1400px,90%);
+  margin:auto;
+}
+
+.aperitif .eyebrow{
+  color:var(--red);
+}
+
+.aperitif h2{
+  font-family:"Bebas Neue";
+  font-size:clamp(80px,11vw,170px);
+  line-height:.64;
+}
+
+.aperitif-grid{
+  margin-top:70px;
+  display:grid;
+  grid-template-columns:1.3fr .7fr;
+  gap:1px;
+  background:rgba(9,8,7,.2);
+}
+
+.aperitif-main{
+  min-height:530px;
+  padding:45px;
+  background:var(--paper);
+  border:1px solid rgba(9,8,7,.18);
+}
+
+.aperitif-main h3{
+  font-family:"Bebas Neue";
+  font-size:65px;
+  line-height:.75;
+  max-width:450px;
+}
+
+.aperitif-main p{
+  max-width:430px;
+  font-size:10px;
+  line-height:1.9;
+  margin-top:25px;
+  opacity:.65;
+}
+
+.aperitif-price{
+  font-family:"Oswald";
+  font-size:34px;
+  margin-top:60px;
+}
+
+.aperitif-list{
+  background:var(--paper);
+}
+
+.ap-row{
+  min-height:105px;
+  padding:20px;
+  border:1px solid rgba(9,8,7,.18);
+  border-bottom:0;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.ap-row:last-child{
+  border-bottom:1px solid rgba(9,8,7,.18);
+}
+
+.ap-row h3{
+  font-family:"Bebas Neue";
+  font-size:25px;
+  line-height:.8;
+}
+
+.ap-row span{
+  font-family:"Oswald";
+  font-size:17px;
+}
+
+/* =========================================================
+   DRINKS
+========================================================= */
+
+.drinks{
+  padding:11vw 0;
+  background:#0b0908;
+}
+
+.drinks-wrap{
+  width:min(1400px,90%);
+  margin:auto;
+}
+
+.drinks-heading{
+  display:flex;
+  align-items:end;
+  justify-content:space-between;
+  margin-bottom:60px;
+}
+
+.drinks-heading h2{
+  font-family:"Bebas Neue";
+  font-size:clamp(90px,12vw,180px);
+  line-height:.65;
+}
+
+.drinks-heading p{
+  width:300px;
+  color:var(--muted);
+  font-size:10px;
+  line-height:1.8;
+}
+
+.drinks-list{
+  border-top:1px solid var(--line);
+}
+
+.drink-row{
+  display:grid;
+  grid-template-columns:70px 1fr 140px;
+  gap:20px;
+  align-items:center;
+  padding:25px 0;
+  border-bottom:1px solid var(--line);
+  transition:.4s var(--ease);
+}
+
+.drink-row:hover{
+  padding-left:15px;
+  background:rgba(255,255,255,.015);
+}
+
+.drink-number{
+  font-family:"Special Elite";
+  color:var(--gold);
+  font-size:8px;
+}
+
+.drink-name{
+  font-family:"Bebas Neue";
+  font-size:34px;
+}
+
+.drink-size{
+  color:var(--muted);
+  font-size:9px;
+}
+
+.drink-price{
+  font-family:"Oswald";
+  font-size:20px;
+  text-align:right;
+}
+
+/* =========================================================
+   SAUCES / EXTRAS
+========================================================= */
+
+.extras{
+  padding:11vw 0;
+  background:#0d0a08;
+}
+
+.extras-grid{
+  width:min(1400px,90%);
+  margin:auto;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:7vw;
+}
+
+.extra-column h3{
+  font-family:"Bebas Neue";
+  font-size:65px;
+  line-height:.7;
+  margin-bottom:30px;
+}
+
+.extra-list{
+  border-top:1px solid var(--line);
+}
+
+.extra-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:17px 0;
+  border-bottom:1px solid var(--line);
+}
+
+.extra-row span{
+  font-size:10px;
+  color:var(--muted);
+}
+
+.extra-row strong{
+  font-family:"Oswald";
+  font-size:17px;
+  font-weight:400;
+}
+
+/* =========================================================
+   MENUS
+========================================================= */
+
+.combo{
+  padding:13vw 0;
+  background:
+    linear-gradient(rgba(7,6,5,.91),rgba(7,6,5,.96)),
+    url("https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=2200&q=85")
+    center/cover;
+}
+
+.combo-wrap{
+  width:min(1450px,92%);
+  margin:auto;
+}
+
+.combo-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+}
+
+.combo-card{
+  min-height:450px;
+  border:1px solid var(--line);
+  padding:35px;
+  position:relative;
+  background:rgba(10,8,7,.58);
+  backdrop-filter:blur(8px);
+  transition:.5s var(--ease);
+}
+
+.combo-card:hover{
+  transform:translateY(-8px);
+  border-color:rgba(185,154,100,.45);
+}
+
+.combo-card.featured{
+  background:var(--red3);
+  transform:translateY(-25px);
+}
+
+.combo-card.featured:hover{
+  transform:translateY(-35px);
+}
+
+.combo-card .num{
+  font-family:"Special Elite";
+  color:var(--gold);
+  font-size:8px;
+}
+
+.combo-card h3{
+  font-family:"Bebas Neue";
+  font-size:58px;
+  line-height:.7;
+  margin-top:70px;
+}
+
+.combo-card p{
+  color:var(--muted);
+  font-size:9px;
+  line-height:1.8;
+  margin-top:25px;
+  max-width:260px;
+}
+
+.combo-price{
+  position:absolute;
+  left:35px;
+  bottom:35px;
+  font-family:"Oswald";
+  font-size:29px;
+}
+
+.combo-tag{
+  position:absolute;
+  top:35px;
+  right:35px;
+  font-size:7px;
+  letter-spacing:.2em;
+  border:1px solid rgba(238,226,204,.3);
+  padding:7px 10px;
+}
+
+/* =========================================================
+   CAMPAIGN
+========================================================= */
+
+.campaign{
+  min-height:780px;
+  margin:0;
+  background:
+    linear-gradient(90deg,rgba(66,10,7,.97),rgba(104,18,13,.68)),
+    url("https://images.unsplash.com/photo-1579751626657-72bc17010498?auto=format&fit=crop&w=2400&q=90")
+    center/cover;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+}
+
+.campaign:before{
+  content:"17";
+  position:absolute;
+  right:-5vw;
+  top:-8vw;
+  font-family:"Bebas Neue";
+  font-size:52vw;
+  line-height:.8;
+  color:rgba(0,0,0,.14);
+}
+
+.campaign-inner{
+  width:min(1400px,90%);
+  margin:auto;
+  position:relative;
+  z-index:2;
+}
+
+.campaign h2{
+  font-family:"Bebas Neue";
+  font-size:clamp(100px,15vw,225px);
+  line-height:.61;
+  margin-top:25px;
+}
+
+.campaign-copy{
+  max-width:510px;
+  margin-top:40px;
+  color:rgba(255,255,255,.67);
+  font-size:11px;
+  line-height:1.9;
+}
+
+.campaign-items{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+  margin-top:30px;
+  max-width:600px;
+}
+
+.campaign-chip{
+  border:1px solid rgba(255,255,255,.2);
+  padding:10px 14px;
+  font-size:8px;
+  letter-spacing:.1em;
+  background:rgba(0,0,0,.1);
+}
+
+.campaign-clock{
+  position:absolute;
+  right:7vw;
+  bottom:8vw;
+  width:160px;
+  height:160px;
+  border:1px solid rgba(255,255,255,.5);
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  font-family:"Special Elite";
+  font-size:9px;
+  line-height:1.7;
+  transform:rotate(-13deg);
+}
+
+.campaign-clock strong{
+  display:block;
+  font-family:"Bebas Neue";
+  font-size:35px;
+  font-weight:400;
+}
+
+/* =========================================================
+   GALLERY
+========================================================= */
+
+.gallery{
+  padding:13vw 0;
+  background:#080706;
+  overflow:hidden;
+}
+
+.gallery-wrap{
+  width:min(1500px,92%);
+  margin:auto;
+}
+
+.gallery-title{
+  font-family:"Bebas Neue";
+  font-size:clamp(90px,13vw,200px);
+  line-height:.62;
+  margin-bottom:60px;
+}
+
+.gallery-track{
+  display:flex;
+  gap:18px;
+  width:max-content;
+  transform:translateX(-4%);
+}
+
+.gallery-card{
+  width:420px;
+  height:570px;
+  position:relative;
+  overflow:hidden;
+  background:#17100d;
+}
+
+.gallery-card:nth-child(2n){
+  height:470px;
+  margin-top:100px;
+}
+
+.gallery-card img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  filter:saturate(.65) contrast(1.1);
+  transition:transform 1.2s var(--ease);
+}
+
+.gallery-card:hover img{
+  transform:scale(1.07);
+}
+
+.gallery-card:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(transparent 55%,rgba(0,0,0,.7));
+}
+
+.gallery-label{
+  position:absolute;
+  z-index:2;
+  left:20px;
+  bottom:20px;
+  font-family:"Special Elite";
+  font-size:8px;
+  letter-spacing:.18em;
+}
+
+/* =========================================================
+   FRANCHISE
+========================================================= */
+
+.franchise{
+  padding:14vw 0;
+  background:var(--paper);
+  color:#090807;
+}
+
+.franchise-wrap{
+  width:min(1400px,90%);
+  margin:auto;
+}
+
+.franchise-grid{
+  display:grid;
+  grid-template-columns:1fr .8fr;
+  gap:10vw;
+  align-items:center;
+}
+
+.franchise h2{
+  font-family:"Bebas Neue";
+  font-size:clamp(90px,13vw,195px);
+  line-height:.61;
+}
+
+.franchise p{
+  max-width:600px;
+  font-size:12px;
+  line-height:2;
+  margin-top:35px;
+  opacity:.65;
+}
+
+.franchise-right{
+  border-left:1px solid rgba(9,8,7,.2);
+  padding-left:5vw;
+}
+
+.franchise-right h3{
+  font-family:"Bebas Neue";
+  font-size:60px;
+  line-height:.7;
+}
+
+.franchise-right p{
+  margin-top:25px;
+  font-size:10px;
+}
+
+.franchise-list{
+  margin-top:35px;
+  border-top:1px solid rgba(9,8,7,.2);
+}
+
+.franchise-item{
+  display:flex;
+  align-items:center;
+  gap:15px;
+  padding:17px 0;
+  border-bottom:1px solid rgba(9,8,7,.2);
+  font-size:9px;
+}
+
+.franchise-item span{
+  font-family:"Oswald";
+  opacity:.5;
+}
+
+/* =========================================================
+   LOCATION
+========================================================= */
+
+.location{
+  min-height:760px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  background:#0c0908;
+}
+
+.location-image{
+  min-height:760px;
+  background:
+    linear-gradient(0deg,rgba(0,0,0,.55),rgba(0,0,0,.05)),
+    url("https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=1800&q=85")
+    center/cover;
+}
+
+.location-content{
+  padding:9vw 7vw;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+
+.location-content h2{
+  font-family:"Bebas Neue";
+  font-size:clamp(90px,11vw,170px);
+  line-height:.62;
+}
+
+.location-info{
+  margin-top:50px;
+  border-top:1px solid var(--line);
+}
+
+.location-row{
+  padding:20px 0;
+  border-bottom:1px solid var(--line);
+}
+
+.location-row span{
+  display:block;
+  color:var(--gold);
+  font-family:"Special Elite";
+  font-size:8px;
+  letter-spacing:.2em;
+  margin-bottom:9px;
+}
+
+.location-row strong{
+  font-family:"Oswald";
+  font-size:22px;
+  font-weight:300;
+}
+
+.location-actions{
+  display:flex;
+  gap:10px;
+  margin-top:30px;
+}
+
+/* =========================================================
+   CONTACT
+========================================================= */
+
+.contact{
+  padding:14vw 0 7vw;
+  background:#080706;
+}
+
+.contact-wrap{
+  width:min(1400px,90%);
+  margin:auto;
+}
+
+.contact-top{
+  display:grid;
+  grid-template-columns:1.15fr .85fr;
+  gap:10vw;
+}
+
+.contact-title{
+  font-family:"Bebas Neue";
+  font-size:clamp(100px,15vw,220px);
+  line-height:.6;
+}
+
+.contact-right{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap:33px;
+}
+
+.contact-block span{
+  display:block;
+  color:var(--gold);
+  font-family:"Special Elite";
+  font-size:8px;
+  letter-spacing:.25em;
+  margin-bottom:10px;
+}
+
+.contact-block a,
+.contact-block strong{
+  font-family:"Oswald";
+  font-weight:300;
+  font-size:24px;
+}
+
+.socials{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.social{
+  border:1px solid var(--line);
+  padding:12px 15px;
+  font-size:8px;
+  letter-spacing:.15em;
+  transition:.4s var(--ease);
+}
+
+.social:hover{
+  background:var(--paper);
+  color:#080706;
+}
+
+.footer-brand{
+  margin-top:13vw;
+  border-top:1px solid var(--line);
+  padding-top:30px;
+  font-family:"Bebas Neue";
+  font-size:clamp(100px,18vw,270px);
+  line-height:.6;
+  color:rgba(238,226,204,.045);
+  overflow:hidden;
+}
+
+.footer-bottom{
+  margin-top:55px;
+  padding-top:20px;
+  border-top:1px solid var(--line);
+  display:flex;
+  justify-content:space-between;
+  gap:20px;
+  color:rgba(238,226,204,.32);
+  font-size:7px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+}
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+.modal{
+  position:fixed;
+  inset:0;
+  z-index:10500;
+  background:rgba(5,4,3,.88);
+  backdrop-filter:blur(15px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  opacity:0;
+  visibility:hidden;
+  transition:.5s var(--ease);
+}
+
+.modal.open{
+  opacity:1;
+  visibility:visible;
+}
+
+.modal-box{
+  width:min(720px,100%);
+  max-height:90vh;
+  overflow:auto;
+  background:var(--paper);
+  color:#090807;
+  padding:45px;
+  position:relative;
+  transform:translateY(30px) scale(.96);
+  transition:.6s var(--ease);
+}
+
+.modal.open .modal-box{
+  transform:none;
+}
+
+.modal-close{
+  position:absolute;
+  top:20px;
+  right:20px;
+  width:35px;
+  height:35px;
+  border:1px solid rgba(0,0,0,.2);
+  background:transparent;
+  border-radius:50%;
+  font-size:15px;
+}
+
+.modal-box h2{
+  font-family:"Bebas Neue";
+  font-size:80px;
+  line-height:.65;
+  margin-bottom:30px;
+}
+
+.modal-box p{
+  font-size:10px;
+  line-height:1.9;
+  opacity:.65;
+}
+
+.modal-actions{
+  display:flex;
+  gap:10px;
+  margin-top:30px;
+}
+
+.modal .btn{
+  border-color:#090807;
+}
+
+.modal .btn-fill{
+  background:#090807;
+  color:var(--paper);
+}
+
+/* =========================================================
+   REVEAL
+========================================================= */
+
+.reveal{
+  opacity:0;
+  transform:translateY(55px);
+  transition:
+    opacity 1s var(--ease),
+    transform 1s var(--ease);
+}
+
+.reveal.visible{
+  opacity:1;
+  transform:none;
+}
+
+.reveal-delay-1{transition-delay:.08s}
+.reveal-delay-2{transition-delay:.16s}
+.reveal-delay-3{transition-delay:.24s}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:1100px){
+
+  .nav-links{
+    gap:20px;
+  }
+
+  .menu-panel{
+    grid-template-columns:.5fr 1.3fr .8fr;
+  }
+
+  .menu-side{
+    padding-right:20px;
+  }
+
+  .menu-center{
+    padding-left:35px;
+    padding-right:35px;
+  }
+
+  .menu-right{
+    padding-left:30px;
+  }
+
+  .product-title{
+    font-size:45px;
+  }
+
+  .size-card{
+    padding:25px;
+  }
+
+  .size-name{
+    font-size:50px;
+  }
+}
+
+@media(max-width:850px){
+
+  body{
+    cursor:auto;
+  }
+
+  .cursor-dot,
+  .cursor-ring,
+  .cursor-label{
+    display:none;
+  }
+
+  .nav{
+    height:70px;
+    padding:0 20px;
+    mix-blend-mode:normal;
+  }
+
+  .nav-links,
+  .nav-order{
+    display:none;
+  }
+
+  .mobile-toggle{
+    display:block;
+  }
+
+  .hero{
+    background-position:63% center;
+  }
+
+  .hero-content{
+    width:calc(100% - 40px);
+  }
+
+  .hero-title{
+    font-size:30vw;
+  }
+
+  .hero-copy{
+    margin-left:0;
+    width:330px;
+  }
+
+  .hero-actions{
+    margin-left:0;
+  }
+
+  .hero-stamp{
+    width:100px;
+    height:100px;
+    right:25px;
+    bottom:110px;
+    font-size:6px;
+  }
+
+  .hero-year{
+    display:none;
+  }
+
+  .stats-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .stat{
+    padding:25px;
+    border-bottom:1px solid var(--line);
+  }
+
+  .stat:nth-child(odd){
+    border-left:0;
+  }
+
+  .story-grid{
+    grid-template-columns:1fr;
+  }
+
+  .story-photo{
+    height:500px;
+  }
+
+  .philosophy-top{
+    display:block;
+  }
+
+  .philosophy-intro{
+    margin-top:30px;
+  }
+
+  .philosophy-grid{
+    grid-template-columns:1fr;
+  }
+
+  .philosophy-card{
+    min-height:300px;
+  }
+
+  .philosophy-card h3{
+    margin-top:65px;
+  }
+
+  .section-heading{
+    display:block;
+  }
+
+  .section-heading p{
+    margin-top:25px;
+  }
+
+  .menu-panel{
+    grid-template-columns:1fr;
+  }
+
+  .menu-side{
+    border-right:0;
+    border-bottom:1px solid var(--line);
+    min-height:180px;
+  }
+
+  .menu-side-number{
+    font-size:100px;
+  }
+
+  .menu-side-copy{
+    margin-top:30px;
+    max-width:400px;
+  }
+
+  .menu-center{
+    min-height:450px;
+    padding:25px 0;
+  }
+
+  .menu-right{
+    border-left:0;
+    border-top:1px solid var(--line);
+    padding:35px 0;
+  }
+
+  .menu-notes{
+    grid-template-columns:1fr;
+  }
+
+  .size-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .size-card{
+    min-height:300px;
+    border-bottom:1px solid rgba(11,9,8,.18);
+  }
+
+  .food-feature{
+    min-height:75vh;
+  }
+
+  .pz-grid{
+    grid-template-columns:1fr;
+  }
+
+  .pz-card{
+    min-height:480px;
+  }
+
+  .burger-layout{
+    grid-template-columns:1fr;
+  }
+
+  .burger-visual{
+    height:500px;
+  }
+
+  .sufle-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .aperitif-grid{
+    grid-template-columns:1fr;
+  }
+
+  .combo-grid{
+    grid-template-columns:1fr;
+  }
+
+  .combo-card.featured{
+    transform:none;
+  }
+
+  .campaign-clock{
+    width:110px;
+    height:110px;
+    right:20px;
+  }
+
+  .gallery-card{
+    width:300px;
+    height:430px;
+  }
+
+  .gallery-card:nth-child(2n){
+    height:360px;
+    margin-top:70px;
+  }
+
+  .franchise-grid{
+    grid-template-columns:1fr;
+  }
+
+  .franchise-right{
+    border-left:0;
+    border-top:1px solid rgba(9,8,7,.2);
+    padding:50px 0 0;
+  }
+
+  .location{
+    grid-template-columns:1fr;
+  }
+
+  .location-image{
+    min-height:450px;
+  }
+
+  .contact-top{
+    grid-template-columns:1fr;
+  }
+
+  .contact-right{
+    margin-top:30px;
+  }
+}
+
+@media(max-width:560px){
+
+  .hero-title{
+    font-size:34vw;
+  }
+
+  .hero-copy{
+    font-size:11px;
+    line-height:1.8;
+  }
+
+  .hero-actions{
+    flex-wrap:wrap;
+  }
+
+  .hero-stamp{
+    display:none;
+  }
+
+  .stats{
+    padding:55px 0;
+  }
+
+  .stat-number{
+    font-size:58px;
+  }
+
+  .story{
+    padding:24vw 0;
+  }
+
+  .story-photo{
+    height:390px;
+  }
+
+  .story-title{
+    font-size:25vw;
+  }
+
+  .story-content p{
+    font-size:11px;
+  }
+
+  .philosophy{
+    padding:24vw 0;
+  }
+
+  .philosophy-title{
+    font-size:25vw;
+  }
+
+  .philosophy-card{
+    padding:30px;
+  }
+
+  .menu{
+    padding:24vw 0;
+  }
+
+  .menu-wrap{
+    width:calc(100% - 40px);
+  }
+
+  .menu-panel{
+    min-height:0;
+  }
+
+  .roller{
+    height:350px;
+  }
+
+  .roller-item.current{
+    font-size:18vw;
+  }
+
+  .product-title{
+    font-size:45px;
+  }
+
+  .size-section{
+    padding:24vw 0;
+  }
+
+  .size-inner{
+    width:calc(100% - 40px);
+  }
+
+  .size-grid{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .size-card{
+    min-height:250px;
+    padding:20px;
+  }
+
+  .size-name{
+    font-size:42px;
+    margin-top:60px;
+  }
+
+  .size-price{
+    font-size:20px;
+    bottom:20px;
+  }
+
+  .food-feature-content{
+    width:calc(100% - 40px);
+  }
+
+  .food-feature h2{
+    font-size:27vw;
+  }
+
+  .food-feature-copy{
+    width:330px;
+  }
+
+  .burger-copy h2{
+    font-size:26vw;
+  }
+
+  .burger-row{
+    grid-template-columns:30px 1fr auto;
+  }
+
+  .burger-row h3{
+    font-size:23px;
+  }
+
+  .burger-row strong{
+    font-size:15px;
+  }
+
+  .sufle{
+    padding:24vw 0;
+  }
+
+  .sufle-title{
+    font-size:28vw;
+  }
+
+  .sufle-grid{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .sufle-item{
+    min-height:145px;
+    padding:18px;
+  }
+
+  .sufle-item h3{
+    font-size:21px;
+    margin-top:30px;
+  }
+
+  .aperitif{
+    padding:24vw 0;
+  }
+
+  .aperitif-wrap{
+    width:calc(100% - 40px);
+  }
+
+  .aperitif h2{
+    font-size:27vw;
+  }
+
+  .aperitif-main{
+    padding:28px;
+  }
+
+  .aperitif-main h3{
+    font-size:50px;
+  }
+
+  .drinks{
+    padding:24vw 0;
+  }
+
+  .drinks-wrap{
+    width:calc(100% - 40px);
+  }
+
+  .drinks-heading{
+    display:block;
+  }
+
+  .drinks-heading h2{
+    font-size:28vw;
+  }
+
+  .drinks-heading p{
+    margin-top:25px;
+  }
+
+  .drink-row{
+    grid-template-columns:35px 1fr auto;
+  }
+
+  .drink-name{
+    font-size:25px;
+  }
+
+  .extras{
+    padding:24vw 0;
+  }
+
+  .extras-grid{
+    width:calc(100% - 40px);
+    grid-template-columns:1fr;
+  }
+
+  .extra-column h3{
+    font-size:55px;
+  }
+
+  .combo{
+    padding:24vw 0;
+  }
+
+  .combo-wrap{
+    width:calc(100% - 40px);
+  }
+
+  .combo-card{
+    min-height:390px;
+  }
+
+  .campaign{
+    min-height:720px;
+  }
+
+  .campaign-inner{
+    width:calc(100% - 40px);
+  }
+
+  .campaign h2{
+    font-size:28vw;
+  }
+
+  .campaign-clock{
+    width:95px;
+    height:95px;
+    bottom:30px;
+    right:25px;
+    font-size:6px;
+  }
+
+  .campaign-clock strong{
+    font-size:26px;
+  }
+
+  .gallery{
+    padding:24vw 0;
+  }
+
+  .gallery-wrap{
+    width:calc(100% - 40px);
+  }
+
+  .gallery-title{
+    font-size:28vw;
+  }
+
+  .gallery-card{
+    width:260px;
+    height:390px;
+  }
+
+  .franchise{
+    padding:24vw 0;
+  }
+
+  .franchise-wrap{
+    width:calc(100% - 40px);
+  }
+
+  .franchise h2{
+    font-size:29vw;
+  }
+
+  .location-content{
+    padding:20vw;
+  }
+
+  .location-content h2{
+    font-size:28vw;
+  }
+
+  .contact{
+    padding:24vw 0 10vw;
+  }
+
+  .contact-wrap{
+    width:calc(100% - 40px);
+  }
+
+  .contact-title{
+    font-size:31vw;
+  }
+
+  .contact-block a,
+  .contact-block strong{
+    font-size:20px;
+  }
+
+  .footer-brand{
+    margin-top:25vw;
+    font-size:31vw;
+  }
+
+  .footer-bottom{
+    flex-direction:column;
+    line-height:1.8;
+  }
+
+  .modal-box{
+    padding:30px 22px;
+  }
+
+  .modal-box h2{
+    font-size:60px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="loader" id="loader">
+  <div class="loader-inner">
+    <div class="loader-brand">
+      <span>WANTED</span><br>PIZZA
+    </div>
+    <div class="loader-sub">EST. ESKİŞEHİR / 2009</div>
+    <div class="loader-line">
+      <div class="loader-progress"></div>
+    </div>
+  </div>
+</div>
+
+<div class="noise"></div>
+<div class="vignette"></div>
+
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+<div class="cursor-label" id="cursorLabel">OPEN</div>
+
+<header class="nav" id="nav">
+  <a href="#" class="brand">
+    WANTED
+    <small>PIZZA • BURGER • 2009</small>
+  </a>
+
+  <nav class="nav-links">
+    <a href="#story">Hikaye</a>
+    <a href="#menu">Menü</a>
+    <a href="#experience">Lezzet</a>
+    <a href="#campaign">Kampanya</a>
+    <a href="#contact">İletişim</a>
+  </nav>
+
+  <a href="tel:+902223220232" class="nav-order">Sipariş Ver ↗</a>
+
+  <button class="mobile-toggle" id="mobileToggle">☰</button>
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <nav class="mobile-menu-links">
+    <a href="#story">HİKAYE</a>
+    <a href="#menu">MENÜ</a>
+    <a href="#experience">LEZZET</a>
+    <a href="#campaign">KAMPANYA</a>
+    <a href="#contact">İLETİŞİM</a>
+  </nav>
+</div>
+
+<main>
+
+<!-- =======================================================
+     HERO
+======================================================= -->
+
+<section class="hero" id="home">
+
+  <div class="hero-image"></div>
+
+  <div class="hero-content">
+
+    <div class="hero-kicker">
+      <i></i>
+      <span>Eskişehir'den doğdu • 2009</span>
+    </div>
+
+    <h1 class="hero-title">
+      <span class="line outline">WANTED</span>
+      <span class="line">PIZZA</span>
+      <span class="line outline">BURGER</span>
+    </h1>
+
+    <p class="hero-copy">
+      Western ruhunu, şehir hayatının enerjisini ve gerçek fast-food
+      tutkusunu aynı masada buluşturan Eskişehirli marka.
+    </p>
+
+    <div class="hero-actions">
+      <a href="#menu" class="btn btn-fill">Menüyü Keşfet</a>
+      <a href="tel:+902223220232" class="btn">Sipariş Ver</a>
+    </div>
+
+  </div>
+
+  <div class="hero-stamp">
+    <div>
+      ★<br>
+      THE ORIGINAL<br>
+      WESTERN<br>
+      PIZZA HOUSE<br>
+      ★
+    </div>
+  </div>
+
+  <div class="hero-year">ESKİŞEHİR / TURKEY / 2009</div>
+
+  <div class="hero-scroll">
+    <span></span>
+    SCROLL TO HUNT
+  </div>
+
+</section>
+
+<!-- =======================================================
+     MARQUEE
+======================================================= -->
+
+<div class="marquee">
+  <div class="marquee-track">
+
+    <div class="marquee-item">
+      <strong>WANTED PIZZA</strong><span>★</span>
+      <strong>WANTED BURGER</strong><span>★</span>
+      <strong>EST. 2009</strong><span>★</span>
+      <strong>ESKİŞEHİR</strong><span>★</span>
+    </div>
+
+    <div class="marquee-item">
+      <strong>WANTED PIZZA</strong><span>★</span>
+      <strong>WANTED BURGER</strong><span>★</span>
+      <strong>EST. 2009</strong><span>★</span>
+      <strong>ESKİŞEHİR</strong><span>★</span>
+    </div>
+
+  </div>
+</div>
+
+<!-- =======================================================
+     STATS
+======================================================= -->
+
+<section class="stats">
+  <div class="stats-grid">
+
+    <div class="stat reveal">
+      <div class="stat-number">2009</div>
+      <div class="stat-label">Kuruluş</div>
+    </div>
+
+    <div class="stat reveal reveal-delay-1">
+      <div class="stat-number">12+</div>
+      <div class="stat-label">Sufle Deneyimi</div>
+    </div>
+
+    <div class="stat reveal reveal-delay-2">
+      <div class="stat-number">5</div>
+      <div class="stat-label">Marka</div>
+    </div>
+
+    <div class="stat reveal reveal-delay-3">
+      <div class="stat-number">∞</div>
+      <div class="stat-label">Lezzet Takıntısı</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- =======================================================
+     STORY
+======================================================= -->
+
+<section class="story" id="story">
+
+  <div class="story-number">09</div>
+
+  <div class="story-grid">
+
+    <div class="story-photo reveal">
+      <img
+        src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=1600&q=90"
+        alt="Wanted pizza"
+      >
+      <div class="photo-border"></div>
+      <div class="photo-tag">WANTED / EST. 2009</div>
+    </div>
+
+    <div class="story-content reveal">
+
+      <div class="eyebrow">01 / The Story</div>
+
+      <h2 class="story-title">
+        BİR<br>
+        ŞEHİR.<br>
+        BİR<br>
+        HİKAYE.
+      </h2>
+
+      <p>
+        Wanted, 2009 yılında Eskişehir'in yerel markası olarak doğmuş ve
+        Türkiye’nin ilk western temalı pizzacısı olma özelliğiyle sektöre
+        yenilik katmıştır.
+      </p>
+
+      <p>
+        Ayrıca, ilk 12 çeşit sufleyi menüsüne ekleyerek tatlıda da fark
+        yaratmış ve öncü bir marka haline gelmiştir. Kısa sürede, lezzeti,
+        kalitesi ve müşteri memnuniyeti ile sektörde kendine güçlü bir yer
+        edinmiştir.
+      </p>
+
+      <p>
+        Her yıl yeni hedeflerle büyüyen Wanted, 2024 itibarıyla 5 farklı marka
+        ile Eskişehir’e hizmet vermeye devam etmektedir.
+      </p>
+
+      <div class="story-quote">
+        “Müşteri odaklılık, kalite, yenilikçilik ve sürdürülebilirlik
+        değerlerimizin temelini oluşturuyor.”
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- =======================================================
+     PHILOSOPHY
+======================================================= -->
+
+<section class="philosophy" id="experience">
+
+  <div class="philosophy-top">
+
+    <div>
+      <div class="eyebrow">02 / Why Wanted</div>
+      <h2 class="philosophy-title">
+        FARKLI<br>
+        OLMAK<br>
+        YETMEZ.
+      </h2>
+    </div>
+
+    <p class="philosophy-intro">
+      Wanted'ın mutfak anlayışı üç kelimeyle özetlenebilir:
+      kalite, karakter ve süreklilik.
+    </p>
+
+  </div>
+
+  <div class="philosophy-grid">
+
+    <article class="philosophy-card reveal">
+      <div class="philosophy-card-number">01</div>
+      <h3>GERÇEK<br>MALZEME</h3>
+      <p>
+        En taze ve kaliteli malzemelerle hazırlanan ürünler.
+        Her malzeme kendi karakterini tabağa taşıyor.
+      </p>
+    </article>
+
+    <article class="philosophy-card reveal reveal-delay-1">
+      <div class="philosophy-card-number">02</div>
+      <h3>WESTERN<br>RUH</h3>
+      <p>
+        2009'dan beri markanın kimliğinde yaşayan özgün western
+        atmosferi ve şehirli fast-food enerjisi.
+      </p>
+    </article>
+
+    <article class="philosophy-card reveal reveal-delay-2">
+      <div class="philosophy-card-number">03</div>
+      <h3>AYNI<br>STANDART</h3>
+      <p>
+        Misyonumuz her lokasyonda aynı yüksek hizmet kalitesini
+        korumak ve müşteriyi merkeze koymak.
+      </p>
+    </article>
+
+  </div>
+
+</section>
+
+<!-- =======================================================
+     MENU
+======================================================= -->
+
+<section class="menu" id="menu">
+
+  <div class="menu-wrap">
+
+    <div class="section-heading reveal">
+      <div>
+        <div class="eyebrow">03 / The Wanted Menu</div>
+        <h2>MENÜ</h2>
+      </div>
+
+      <p>
+        Ürünlerin arasında dolaş.
+        Fare tekerleğini kullan veya ürün alanını yukarı-aşağı sürükle.
+      </p>
+    </div>
+
+    <div class="menu-tabs" id="menuTabs"></div>
+
+    <div class="menu-panel">
+
+      <aside class="menu-side">
+        <div class="menu-side-number" id="menuSideNumber">01</div>
+
+        <div class="menu-side-copy">
+          <div class="eyebrow" id="menuSideEyebrow">
+            PİZZALAR
+          </div>
+
+          <p id="menuSideCopy">
+            Wanted'ın imzası.
+            Klasiklerden cesur kombinasyonlara kadar geniş pizza seçkisi.
+          </p>
+        </div>
+      </aside>
+
+      <div class="menu-center">
+
+        <div class="roller" id="roller"></div>
+
+      </div>
+
+      <aside class="menu-right">
+
+        <div class="product-count" id="productCount">
+          01 / 13
+        </div>
+
+        <h3 class="product-title" id="productTitle">
+          Wanted Mix Pizza
+        </h3>
+
+        <p class="product-description" id="productDescription"></p>
+
+        <div class="product-prices" id="productPrices"></div>
+
+        <div class="product-note">
+          ↑ ↓ SÜRÜKLE / MOUSE WHEEL / TOUCH
+        </div>
+
+      </aside>
+
+    </div>
+
+    <div class="menu-notes">
+
+      <div class="menu-note">
+        <span>PİZZA NOTU</span>
+        <p>
+          Sos, hamur ve kenar tercihleri için servis ekibine danışabilirsiniz.
+        </p>
+      </div>
+
+      <div class="menu-note">
+        <span>DEV PİZZA</span>
+        <p>
+          Yarım yarım pizza seçeneği yalnızca dev boyutta geçerlidir.
+          +25 TL.
+        </p>
+      </div>
+
+      <div class="menu-note">
+        <span>SERVİS</span>
+        <p>
+          Burger, kapalı burger, panzerotti ve sandviçler patates ile servis edilir.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- =======================================================
+     PIZZA SIZES
+======================================================= -->
+
+<section class="size-section">
+
+  <div class="size-inner">
+
+    <div class="size-heading reveal">
+
+      <div>
+        <div class="eyebrow" style="color:#841c16">04 / Pizza Sizes</div>
+        <h2>BOYUTUNU<br>SEÇ.</h2>
+      </div>
+
+      <p>
+        Wanted pizzalarının boyut seçenekleri.
+        Ürüne göre fiyat farklılıklarını menüden inceleyebilirsin.
+      </p>
+
+    </div>
+
+    <div class="size-grid">
+
+      <div class="size-card reveal">
+        <div class="size-num">01 / SMALL</div>
+        <div class="size-name">KÜÇÜK</div>
+        <div class="size-price">330 — 350 TL</div>
+      </div>
+
+      <div class="size-card reveal reveal-delay-1">
+        <div class="size-num">02 / MEDIUM</div>
+        <div class="size-name">ORTA</div>
+        <div class="size-price">370 — 420 TL</div>
+      </div>
+
+      <div class="size-card reveal reveal-delay-2">
+        <div class="size-num">03 / LARGE</div>
+        <div class="size-name">BÜYÜK</div>
+        <div class="size-price">500 — 560 TL</div>
+      </div>
+
+      <div class="size-card reveal reveal-delay-3">
+        <div class="size-num">04 / DEV</div>
+        <div class="size-name">DEV</div>
+        <div class="size-price">660 — 720 TL</div>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- =======================================================
+     FOOD FEATURE
+======================================================= -->
+
+<section class="food-feature">
+
+  <div class="food-feature-content reveal">
+
+    <div class="eyebrow">05 / Straight From The Oven</div>
+
+    <h2>
+      HAMUR.<br>
+      ATEŞ.<br>
+      <span class="outline">LEZZET.</span>
+    </h2>
+
+    <p class="food-feature-copy">
+      İnce detaylardan güçlü aromalara.
+      Wanted'da pizza sadece bir ürün değil, markanın en güçlü imzalarından biri.
+    </p>
+
+  </div>
+
+</section>
+
+<!-- =======================================================
+     PANZEROTTI
+======================================================= -->
+
+<section class="panzerotti">
+
+  <div class="panzerotti-wrap">
+
+    <div class="section-heading reveal">
+
+      <div>
+        <div class="eyebrow">06 / Panzerotti®</div>
+        <h2>KAPAT.<br>ÇITIRLAT.</h2>
+      </div>
+
+      <p>
+        Pizza karakterini kapalı formda taşıyan üç güçlü seçenek.
+        Patates ile servis edilir.
+      </p>
+
+    </div>
+
+    <div class="pz-grid">
+
+      <article class="pz-card reveal">
+        <div class="pz-content">
+          <div class="pz-number">01</div>
+          <h3>PANZEROTTI<br>TURCA</h3>
+          <p>
+            Pizza sosu, peynir, pastırma, kasap sucuğu,
+            mor soğan, kuru domates.
+          </p>
+          <div class="pz-price">385 TL</div>
+        </div>
+      </article>
+
+      <article class="pz-card reveal reveal-delay-1">
+        <div class="pz-content">
+          <div class="pz-number">02</div>
+          <h3>PANZEROTTI<br>DÖNER</h3>
+          <p>
+            Pizza sosu, peynir, et döner,
+            mor soğan, cheddar.
+          </p>
+          <div class="pz-price">385 TL</div>
+        </div>
+      </article>
+
+      <article class="pz-card reveal reveal-delay-2">
+        <div class="pz-content">
+          <div class="pz-number">03</div>
+          <h3>PANZEROTTI<br>ŞARK</h3>
+          <p>
+            Pizza sosu, peynir, kavurma,
+            mor soğan, mantar, kekik.
+          </p>
+          <div class="pz-price">385 TL</div>
+        </div>
+      </article>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- =======================================================
+     BURGERS
+======================================================= -->
+
+<section class="burgers">
+
+  <div class="burger-layout">
+
+    <div class="burger-visual reveal">
+      <img
+        src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=1500&q=90"
+        alt="Wanted burger"
+      >
+    </div>
+
+    <div class="burger-copy reveal">
+
+      <div class="eyebrow">07 / Burger Department</div>
+
+      <h2>
+        BURGER<br>
+        <span class="outline">AVINA</span><br>
+        ÇIK.
+      </h2>
+
+      <p>
+        Wanted burgerleri patates ile servis edilir.
+        Köfte gramajını yükseltmek veya kutulu içecek eklemek mümkündür.
+      </p>
+
+      <div class="burger-list">
+
+        <div class="burger-row">
+          <span>01</span>
+          <div>
+            <h3>Klasik Burger</h3>
+            <p>Wanted klasiği</p>
+          </div>
+          <strong>450 TL</strong>
+        </div>
+
+        <div class="burger-row">
+          <span>02</span>
+          <div>
+            <h3>Füme Burger</h3>
+            <p>Füme karakter</p>
+          </div>
+          <strong>540 TL</strong>
+        </div>
+
+        <div class="burger-row">
+          <span>03</span>
+          <div>
+            <h3>Acılı Burger</h3>
+            <p>Baharatlı dokunuş</p>
+          </div>
+          <strong>480 TL</strong>
+        </div>
+
+        <div class="burger-row">
+          <span>04</span>
+          <div>
+            <h3>Wanted Özel</h3>
+            <p>Özel Wanted reçetesi</p>
+          </div>
+          <strong>480 TL</strong>
+        </div>
+
+        <div class="burger-row">
+          <span>05</span>
+          <div>
+            <h3>Tavuk Burger</h3>
+            <p>Tavuk burger</p>
+          </div>
+          <strong>385 TL</strong>
+        </div>
+
+        <div class="burger-row">
+          <span>06</span>
+          <div>
+            <h3>Cheddar Burger</h3>
+            <p>Yoğun cheddar</p>
+          </div>
+          <strong>480 TL</strong>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- =======================================================
+     CLOSED BURGER
+======================================================= -->
+
+<section class="food-feature" style="
+  background:
+  linear-gradient(90deg,rgba(8,7,6,.98),rgba(8,7,6,.42)),
+  url('https://images.unsplash.com/photo-1550317138-10000687a72b?auto=format&fit=crop&w=2400&q=90')
+  center/cover;
+">
+
+  <div class="food-feature-content reveal">
+
+    <div class="eyebrow">08 / Closed Burger</div>
+
+    <h2>
+      BURGERİ<br>
+      KAPATTIK.<br>
+      <span class="outline">OLAY BİTTİ.</span>
+    </h2>
+
+    <p class="food-feature-copy">
+      Klasik, Chicken, Bacon ve Cheese.
+      Kapalı burger serisinin tamamı patates ile servis edilir.
+    </p>
+
+  </div>
+
+</section>
+
+<!-- =======================================================
+     CLOSED BURGER LIST
+======================================================= -->
+
+<section class="extras">
+
+  <div class="extras-grid">
+
+    <div class="extra-column reveal">
+
+      <div class="eyebrow">Closed Burger</div>
+      <h3>KAPALI<br>BURGERLER</h3>
+
+      <div class="extra-list">
+
+        <div class="extra-row">
+          <span>Klasik Kapalı Burger</span>
+          <strong>475 TL</strong>
+        </div>
+
+        <div class="extra-row">
+          <span>Kapalı Chicken Burger</span>
+          <strong>365 TL</strong>
+        </div>
+
+        <div class="extra-row">
+          <span>Kapalı Bacon Burger</span>
+          <strong>535 TL</strong>
+        </div>
+
+        <div class="extra-row">
+          <span>Kapalı Cheese Burger</span>
+          <strong>485 TL</strong>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="extra-column reveal reveal-delay-1">
+
+      <div class="eyebrow">Burger Options</div>
+      <h3>SEÇ.<br>YÜKSELT.</h3>
+
+      <div class="extra-list">
+
+        <div class="extra-row">
+          <span>210 gr köfte</span>
+          <strong>+110 TL</strong>
+        </div>
+
+        <div class="extra-row">
+          <span>280 gr köfte</span>
+          <strong>+170 TL</strong>
+        </div>
+
+        <div class="extra-row">
+          <span>Kutulu içecek</span>
+          <strong>+45 TL</strong>
+        </div>
+
+        <div class="extra-row">
+          <span>Patates</span>
+          <strong>DAHİL</strong>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- =======================================================
+     SUFLE
+======================================================= -->
+
+<section class="sufle">
+
+  <div class="sufle-wrap">
+
+    <div class="eyebrow">09 / Dessert Department</div>
+
+    <h2 class="sufle-title">
+      SUFLE<br>
+      TAKINTISI.
+    </h2>
+
+    <p class="sufle-description">
+      Wanted, tatlı tarafında da farklı olmayı seviyor.
+      İlk 12 çeşit sufleyi menüsüne ekleyerek bu alanda da öncü oldu.
+      Tüm sufleler dondurma ile servis edilir.
+    </p>
+
+    <div class="sufle-grid">
+
+      <div class="sufle-item reveal">
+        <span>01</span>
+        <h3>ÖZEL SUFLE</h3>
+        <div class="sufle-price">160 TL</div>
+      </div>
+
+      <div class="sufle-item reveal">
+        <span>02</span>
+        <h3>BİTTER SUFLE</h3>
+        <div class="sufle-price">160 TL</div>
+      </div>
+
+      <div class="sufle-item reveal">
+        <span>03</span>
+        <h3>SÜTLÜ ÇİKOLATA<br>HİNDİSTAN CEVİZLİ</h3>
+        <div class="sufle-price">160 TL</div>
+      </div>
+
+      <div class="sufle-item reveal">
+        <span>04</span>
+        <h3>BEYAZ<br>ÇİKOLATALI</h3>
+        <div class="sufle-price">160 TL</div>
+      </div>
+
+      <div class="sufle-item reveal">
+        <span>05</span>
+        <h3>BEYAZ<br>TAHİNLİ</h3>
+        <div class="sufle-price">160 TL</div>
+      </div>
+
+      <div class="sufle-item reveal">
+        <span>06</span>
+        <h3>BEYAZ<br>ÇİLEKLİ</h3>
+        <div class="sufle-price">160 TL</div>
+      </div>
+
+      <div class="sufle-item reveal">
+        <span>07</span>
+        <h3>BEYAZ<br>MUZLU</h3>
+        <div class="sufle-price">160 TL</div>
+      </div>
+
+      <div class="sufle-item reveal">
+        <span>+</span>
+        <h3>YEMEK + SUFLE</h3>
+        <div class="sufle-price">140 TL</div>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- =======================================================
+     APERITIF
+======================================================= -->
+
+<section class="aperitif">
+
+  <div class="aperitif-wrap">
+
+    <div class="eyebrow">10 / Side Quest</div>
+
+    <h2>
+      KIZARTMA<br>
+      SEPETİ.
+    </h2>
+
+    <div class="aperitif-grid">
+
+      <div class="aperitif-main">
+
+        <h3>
+          WANTED<br>
+          KIZARTMA<br>
+          SEPETİ
+        </h3>
+
+        <p>
+          600 gr patates, 200 gr çıtır tavuk,
+          4 soğan halkası ve 4 sosis.
+        </p>
+
+        <div class="aperitif-price">480 TL</div>
+
+      </div>
+
+      <div class="aperitif-list">
+
+        <div class="ap-row">
+          <h3>Küçük<br>Kızartma Sepeti</h3>
+          <span>250 TL</span>
+        </div>
+
+        <div class="ap-row">
+          <h3>Baharatlı<br>Patates</h3>
+          <span>100 TL</span>
+        </div>
+
+        <div class="ap-row">
+          <h3>100 gr<br>Çıtır Tavuk</h3>
+          <span>140 TL</span>
+        </div>
+
+        <div class="ap-row">
+          <h3>200 gr<br>Çıtır Tavuk</h3>
+          <span>225 TL</span>
+        </div>
+
+        <div class="ap-row">
+          <h3>6'lı<br>Soğan Halkası</h3>
+          <span>80 TL</span>
+        </div>
+
+        <div class="ap-row">
+          <h3>12'li<br>Soğan Halkası</h3>
+          <span>120 TL</span>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- =======================================================
+     DRINKS
+======================================================= -->
+
+<section class="drinks">
+
+  <div class="drinks-wrap">
+
+    <div class="drinks-heading">
+
+      <div>
+        <div class="eyebrow">11 / Drinks</div>
+        <h2>İÇECEK<br>İSTASYONU.</h2>
+      </div>
+
+      <p>
+        33 cl seçenekler 60 TL.
+        1 L seçenekler 80 TL.
+        Güncel ürün seçimini serviste sorabilirsiniz.
+      </p>
+
+    </div>
+
+    <div class="drinks-list">
+
+      <div class="drink-row">
+        <div class="drink-number">01</div>
+        <div class="drink-name">PEPSİ</div>
+        <div class="drink-price">60 TL</div>
+      </div>
+
+      <div class="drink-row">
+        <div class="drink-number">02</div>
+        <div class="drink-name">PEPSİ MAX</div>
+        <div class="drink-price">60 TL</div>
+      </div>
+
+      <div class="drink-row">
+        <div class="drink-number">03</div>
+        <div class="drink-name">YEDİGÜN</div>
+        <div class="drink-price">60 TL</div>
+      </div>
+
+      <div class="drink-row">
+        <div class="drink-number">04</div>
+        <div class="drink-name">7UP</div>
+        <div class="drink-price">60 TL</div>
+      </div>
+
+      <div class="drink-row">
+        <div class="drink-number">05</div>
+        <div class="drink-name">LIPTON</div>
+        <div class="drink-price">60 TL</div>
+      </div>
+
+      <div class="drink-row">
+        <div class="drink-number">06</div>
+        <div class="drink-name">SU</div>
+        <div class="drink-size">20 TL</div>
+        <div class="drink-price">20 TL</div>
+      </div>
+
+      <div class="drink-row">
+        <div class="drink-number">07</div>
+        <div class="drink-name">SUSURLUK AYRAN</div>
+        <div class="drink-price">60 TL</div>
+      </div>
+
+      <div class="drink-row">
+        <div class="drink-number">08</div>
+        <div class="drink-name">SODA</div>
+        <div class="drink-price">35 TL</div>
+      </div>
+
+      <div class="drink-row">
+        <div class="drink-number">09</div>
+        <div class="drink-name">1 L SEÇENEKLER</div>
+        <div class="drink-price">80 TL</div>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- =======================================================
+     SANDWICH
+======================================================= -->
+
+<section class="burgers" style="background:#0d0a08">
+
+  <div class="burger-layout">
+
+    <div class="burger-copy reveal">
+
+      <div class="eyebrow">12 / Sandwich Department</div>
+
+      <h2>
+        SANDVİÇ<br>
+        <span class="outline">SOKAĞI.</span>
+      </h2>
+
+      <p>
+        Labne, peynirler, füme etler, köz biber ve Wanted sosları.
+        Tüm sandviçler patates ile servis edilir.
+      </p>
+
+      <div class="burger-list">
+
+        <div class="burger-row">
+          <span>01</span>
+          <div>
+            <h3>Jambonlu Sandwich</h3>
+            <p>Labne • zeytin ezmesi • dana jambon</p>
+          </div>
+          <strong>385 TL</strong>
+        </div>
+
+        <div class="burger-row">
+          <span>02</span>
+          <div>
+            <h3>Bacon Sandwich</h3>
+            <p>Double labne • dana bacon • cheddar sos</p>
+          </div>
+          <strong>450 TL</strong>
+        </div>
+
+        <div class="burger-row">
+          <span>03</span>
+          <div>
+            <h3>Hindi Füme</h3>
+            <p>Labne • hindi füme • dilim kaşar</p>
+          </div>
+          <strong>385 TL</strong>
+        </div>
+
+        <div class="burger-row">
+          <span>04</span>
+          <div>
+            <h3>Kavurmalı</h3>
+            <p>Kavurma • hellim • köz biber • cheddar sos</p>
+          </div>
+          <strong>440 TL</strong>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="burger-visual reveal">
+      <img
+        src="https://images.unsplash.com/photo-1550507992-eb63ffee0847?auto=format&fit=crop&w=1500&q=90"
+        alt="Sandwich"
+      >
+    </div>
+
+  </div>
+
+</section>
+
+<!-- =======================================================
+     EXTRAS
+======================================================= -->
+
+<section class="extras">
+
+  <div class="extras-grid">
+
+    <div class="extra-column reveal">
+
+      <div class="eyebrow">13 / Sauces</div>
+      <h3>SOS<br>ARŞİVİ</h3>
+
+      <div class="extra-list">
+
+        <div class="extra-row"><span>Ranch</span><strong>15 TL</strong></div>
+        <div class="extra-row"><span>Barbekü</span><strong>15 TL</strong></div>
+        <div class="extra-row"><span>Köz Biberli Mayonez</span><strong>15 TL</strong></div>
+        <div class="extra-row"><span>Hardal</span><strong>15 TL</strong></div>
+        <div class="extra-row"><span>Ballı Hardal</span><strong>15 TL</strong></div>
+        <div class="extra-row"><span>Cheddar Sos</span><strong>15 TL</strong></div>
+        <div class="extra-row"><span>Sarımsak Sos</span><strong>15 TL</strong></div>
+        <div class="extra-row"><span>Sarımsaklı Mayonez</span><strong>15 TL</strong></div>
+        <div class="extra-row"><span>Acı Sos</span><strong>15 TL</strong></div>
+
+      </div>
+
+    </div>
+
+    <div class="extra-column reveal reveal-delay-1">
+
+      <div class="eyebrow">14 / Extras</div>
+      <h3>EKSTRA<br>VURUŞ</h3>
+
+      <div class="extra-list">
+
+        <div class="extra-row"><span>Tavuk Schnitzel</span><strong>45 TL</strong></div>
+        <div class="extra-row"><span>Dana Jambon</span><strong>45 TL</strong></div>
+        <div class="extra-row"><span>Hindi Füme</span><strong>45 TL</strong></div>
+        <div class="extra-row"><span>Kuru Domates</span><strong>20 TL</strong></div>
+        <div class="extra-row"><span>Küp Turşu</span><strong>20 TL</strong></div>
+        <div class="extra-row"><span>Taze Soğan</span><strong>20 TL</strong></div>
+        <div class="extra-row"><span>Soğan Kıtırı</span><strong>20 TL</strong></div>
+        <div class="extra-row"><span>Mısır</span><strong>20 TL</strong></div>
+        <div class="extra-row"><span>Dilim Siyah Zeytin</span><strong>20 TL</strong></div>
+        <div class="extra-row"><span>Doritos</span><strong>20 TL</strong></div>
+        <div class="extra-row"><span>Barbekü Sos</span><strong>5 TL</strong></div>
+        <div class="extra-row"><span>Köri Sos</span><strong>5 TL</strong></div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- =======================================================
+     COMBO MENUS
+======================================================= -->
+
+<section class="combo">
+
+  <div class="combo-wrap">
+
+    <div class="section-heading reveal">
+
+      <div>
+        <div class="eyebrow">15 / Pizza Menus</div>
+        <h2>MENÜ<br>AVCILARI.</h2>
+      </div>
+
+      <p>
+        Tek kişiden koloniye.
+        Pizza menülerinin tamamı seçilebilir ürünlerle geliyor.
+      </p>
+
+    </div>
+
+    <div class="combo-grid">
+
+      <article class="combo-card reveal">
+        <span class="num">01</span>
+        <h3>SINGLE<br>MENÜ</h3>
+        <p>
+          1 küçük pizza + 200 gr baharatlı patates +
+          1 sufle + 1 kutulu içecek.
+        </p>
+        <div class="combo-price">520 TL</div>
+      </article>
+
+      <article class="combo-card featured reveal reveal-delay-1">
+        <span class="num">02</span>
+        <span class="combo-tag">POPULAR</span>
+        <h3>COUPLE<br>MENÜ</h3>
+        <p>
+          2 küçük pizza + 300 gr baharatlı patates +
+          2 sufle + 1 L içecek.
+        </p>
+        <div class="combo-price">880 TL</div>
+      </article>
+
+      <article class="combo-card reveal reveal-delay-2">
+        <span class="num">03</span>
+        <h3>MEDIUM<br>MENÜ</h3>
+        <p>
+          1 orta pizza + 1 L içecek.
+        </p>
+        <div class="combo-price">450 TL</div>
+      </article>
+
+      <article class="combo-card reveal">
+        <span class="num">04</span>
+        <h3>EXTRA<br>MEDIUM</h3>
+        <p>
+          2 orta pizza + 1 L içecek.
+        </p>
+        <div class="combo-price">730 TL</div>
+      </article>
+
+      <article class="combo-card reveal reveal-delay-1">
+        <span class="num">05</span>
+        <h3>LARGE<br>MENÜ</h3>
+        <p>
+          1 büyük pizza + 1 L içecek.
+        </p>
+        <div class="combo-price">575 TL</div>
+      </article>
+
+      <article class="combo-card reveal reveal-delay-2">
+        <span class="num">06</span>
+        <h3>EXTRA<br>LARGE</h3>
+        <p>
+          2 büyük pizza + 1 L içecek.
+        </p>
+        <div class="combo-price">990 TL</div>
+      </article>
+
+      <article class="combo-card reveal">
+        <span class="num">07</span>
+        <h3>BIG<br>MENÜ</h3>
+        <p>
+          1 dev pizza + 1 L içecek.
+        </p>
+        <div class="combo-price">690 TL</div>
+      </article>
+
+      <article class="combo-card featured reveal reveal-delay-1">
+        <span class="num">08</span>
+        <span class="combo-tag">2 DEV</span>
+        <h3>KOLONİ<br>MENÜ</h3>
+        <p>
+          2 dev pizza + 1 L içecek.
+        </p>
+        <div class="combo-price">1.380 TL</div>
+      </article>
+
+      <article class="combo-card reveal reveal-delay-2">
+        <span class="num">09</span>
+        <h3>EXTRA<br>KOLONİ</h3>
+        <p>
+          2 dev pizza + 1 büyük pizza + 1 L içecek.
+        </p>
+        <div class="combo-price">1.865 TL</div>
+      </article>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- =======================================================
+     CAMPAIGN
+======================================================= -->
+
+<section class="campaign" id="campaign">
+
+  <div class="campaign-inner reveal">
+
+    <div class="eyebrow">16 / Daily Hunt</div>
+
+    <h2>
+      GÜNÜN<br>
+      AVINI<br>
+      YAKALA.
+    </h2>
+
+    <p class="campaign-copy">
+      17:00'ye kadar geçerli özel kampanya.
+      Günün belirli ürünlerini daha avantajlı şekilde yakala.
+    </p>
+
+    <div class="campaign-items">
+      <div class="campaign-chip">MIX PIZZA</div>
+      <div class="campaign-chip">MARGARITA PIZZA</div>
+      <div class="campaign-chip">AKDENİZ PIZZA</div>
+      <div class="campaign-chip">VEGI PIZZA</div>
+      <div class="campaign-chip">TÜM SANDVİÇLER</div>
+      <div class="campaign-chip">KLASİK KAPALI BURGER</div>
+      <div class="campaign-chip">KLASİK BURGER</div>
+      <div class="campaign-chip">TÜM PANZEROTTI</div>
+    </div>
+
+    <br>
+
+    <span class="btn" style="color:white;border-color:rgba(255,255,255,.35)">
+      17:00'YE KADAR
+    </span>
+
+  </div>
+
+  <div class="campaign-clock">
+    <div>
+      EVERY DAY<br>
+      <strong>17:00</strong>
+      <br>
+      DON'T MISS IT
+    </div>
+  </div>
+
+</section>
+
+<!-- =======================================================
+     GALLERY
+======================================================= -->
+
+<section class="gallery">
+
+  <div class="gallery-wrap">
+
+    <div class="eyebrow">17 / Visual Archive</div>
+
+    <h2 class="gallery-title">
+      WANTED<br>
+      <span class="outline">AFTER DARK.</span>
+    </h2>
+
+    <div class="gallery-track">
+
+      <div class="gallery-card">
+        <img
+          src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=1000&q=88"
+          alt="Pizza"
+        >
+        <div class="gallery-label">01 / PIZZA</div>
+      </div>
+
+      <div class="gallery-card">
+        <img
+          src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=1000&q=88"
+          alt="Burger"
+        >
+        <div class="gallery-label">02 / BURGER</div>
+      </div>
+
+      <div class="gallery-card">
+        <img
+          src="https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=1000&q=88"
+          alt="Dessert"
+        >
+        <div class="gallery-label">03 / DESSERT</div>
+      </div>
+
+      <div class="gallery-card">
+        <img
+          src="https://images.unsplash.com/photo-1550507992-eb63ffee0847?auto=format&fit=crop&w=1000&q=88"
+          alt="Sandwich"
+        >
+        <div class="gallery-label">04 / SANDWICH</div>
+      </div>
+
+      <div class="gallery-card">
+        <img
+          src="https://images.unsplash.com/photo-1579751626657-72bc17010498?auto=format&fit=crop&w=1000&q=88"
+          alt="Pizza"
+        >
+        <div class="gallery-label">05 / OVEN</div>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- =======================================================
+     FRANCHISE
+======================================================= -->
+
+<section class="franchise">
+
+  <div class="franchise-wrap">
+
+    <div class="franchise-grid">
+
+      <div class="reveal">
+
+        <div class="eyebrow">18 / Franchise</div>
+
+        <h2>
+          WANTED'I<br>
+          BİRLİKTE<br>
+          BÜYÜTELİM.
+        </h2>
+
+        <p>
+          Franchise ortaklarımıza sunduğumuz yüksek kârlılık fırsatları
+          sayesinde yatırımcılarımız kazançlı bir iş modeline sahip olurken,
+          biz de tüm süreçlerde yanlarında oluyoruz.
+        </p>
+
+      </div>
+
+      <div class="franchise-right reveal reveal-delay-1">
+
+        <h3>
+          HER<br>
+          ADIMDA<br>
+          YANINDA.
+        </h3>
+
+        <p>
+          Operasyonel destekten pazarlama stratejilerine kadar
+          franchise sahiplerimizin yanında yer alıyoruz.
+        </p>
+
+        <div class="franchise-list">
+
+          <div class="franchise-item">
+            <span>01</span>
+            Operasyonel destek
+          </div>
+
+          <div class="franchise-item">
+            <span>02</span>
+            Pazarlama stratejileri
+          </div>
+
+          <div class="franchise-item">
+            <span>03</span>
+            Marka desteği
+          </div>
+
+          <div class="franchise-item">
+            <span>04</span>
+            Süreç yönetimi
+          </div>
+
+        </div>
+
+        <br>
+
+        <a
+          href="https://instagram.com/wanted_kafa"
+          target="_blank"
+          class="btn"
+          style="border-color:#090807"
+        >
+          @WANTED_KAFA
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- =======================================================
+     LOCATION
+======================================================= -->
+
+<section class="location">
+
+  <div class="location-image"></div>
+
+  <div class="location-content reveal">
+
+    <div class="eyebrow">19 / Come Find Us</div>
+
+    <h2>
+      BAĞLAR'DA<br>
+      GÖRÜŞÜRÜZ.
+    </h2>
+
+    <div class="location-info">
+
+      <div class="location-row">
+        <span>ÇALIŞMA SAATLERİ</span>
+        <strong>11:00 — 00:00</strong>
+      </div>
+
+      <div class="location-row">
+        <span>SİPARİŞ</span>
+        <strong>0 (222) 322 02 32</strong>
+      </div>
+
+      <div class="location-row">
+        <span>INSTAGRAM</span>
+        <strong>@wanted_pizza_burger</strong>
+      </div>
+
+    </div>
+
+    <div class="location-actions">
+
+      <a href="tel:+902223220232" class="btn btn-fill">
+        HEMEN ARA
+      </a>
+
+      <a
+        href="https://instagram.com/wanted_pizza_burger"
+        target="_blank"
+        class="btn"
+      >
+        INSTAGRAM
+      </a>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- =======================================================
+     CONTACT
+======================================================= -->
+
+<section class="contact" id="contact">
+
+  <div class="contact-wrap">
+
+    <div class="contact-top">
+
+      <div class="reveal">
+
+        <div class="eyebrow">20 / Contact</div>
+
+        <h2 class="contact-title">
+          BUL<br>
+          BİZİ.
+        </h2>
+
+      </div>
+
+      <div class="contact-right reveal reveal-delay-1">
+
+        <div class="contact-block">
+          <span>SİPARİŞ / TELEFON</span>
+          <a href="tel:+902223220232">
+            0 (222) 322 02 32
+          </a>
+        </div>
+
+        <div class="contact-block">
+          <span>INSTAGRAM</span>
+          <a
+            href="https://instagram.com/wanted_pizza_burger"
+            target="_blank"
+          >
+            @wanted_pizza_burger
+          </a>
+        </div>
+
+        <div class="contact-block">
+          <span>FRANCHISE</span>
+          <a
+            href="https://instagram.com/wanted_kafa"
+            target="_blank"
+          >
+            @wanted_kafa
+          </a>
+        </div>
+
+        <div class="contact-block">
+          <span>YOUTUBE</span>
+          <a
+            href="https://www.youtube.com/channel/UC-J_UhBfMusupevwhAY_EHA"
+            target="_blank"
+          >
+            WANTED
+          </a>
+        </div>
+
+        <div class="socials">
+
+          <a
+            class="social"
+            href="https://instagram.com/wanted_pizza_burger"
+            target="_blank"
+          >
+            INSTAGRAM
+          </a>
+
+          <a
+            class="social"
+            href="https://instagram.com/wanted_kafa"
+            target="_blank"
+          >
+            FRANCHISE
+          </a>
+
+          <a
+            class="social"
+            href="https://www.youtube.com/channel/UC-J_UhBfMusupevwhAY_EHA"
+            target="_blank"
+          >
+            YOUTUBE
+          </a>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="footer-brand">
+      WANTED
+    </div>
+
+    <div class="footer-bottom">
+      <span>WANTED PIZZA BURGER / ESKİŞEHİR</span>
+      <span>EST. 2009 / MADE FOR THE HUNGRY</span>
+      <span>© 2026 WANTED</span>
+    </div>
+
+  </div>
+
+</section>
+
+</main>
+
+<!-- =======================================================
+     ORDER MODAL
+======================================================= -->
+
+<div class="modal" id="orderModal">
+
+  <div class="modal-box">
+
+    <button class="modal-close" id="modalClose">×</button>
+
+    <div class="eyebrow" style="color:#841c16">
+      Wanted Order
+    </div>
+
+    <h2>
+      AÇ.<br>
+      ARA.<br>
+      SİPARİŞ VER.
+    </h2>
+
+    <p>
+      Online sipariş sistemi bu demo sürümünde doğrudan telefon
+      üzerinden çalışacak şekilde hazırlandı.
+      Sipariş vermek için aşağıdaki numarayı arayabilirsin.
+    </p>
+
+    <div class="modal-actions">
+
+      <a href="tel:+902223220232" class="btn btn-fill">
+        0 (222) 322 02 32
+      </a>
+
+      <button class="btn" id="modalClose2">
+        KAPAT
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+
+/* =========================================================
+   WANTED DATA
+========================================================= */
+
+const menus = {
+
+  pizzas:{
+    label:"PİZZALAR",
+    copy:"Wanted'ın imzası. Klasiklerden cesur kombinasyonlara kadar geniş pizza seçkisi.",
+    items:[
+
+      {
+        name:"Wanted Mix Pizza",
+        description:"Pizza sosu, pizza peyniri, sucuk, salam, mantar, kapya biber, köy biberi, siyah zeytin, yeşil zeytin, mısır.",
+        prices:[
+          ["Küçük","330 TL"],
+          ["Orta","370 TL"],
+          ["Büyük","500 TL"],
+          ["Dev","660 TL"]
+        ]
+      },
+
+      {
+        name:"Barbar Pizza",
+        description:"Acı pizza sosu, pizza peyniri, kasap sucuk, küp et, mantar, kapya biber, köy biberi, mor soğan.",
+        prices:[
+          ["Küçük","350 TL"],
+          ["Orta","420 TL"],
+          ["Büyük","560 TL"],
+          ["Dev","720 TL"]
+        ]
+      },
+
+      {
+        name:"Döner Pizza",
+        description:"Pizza sosu, pizza peyniri, et döner, cheddar peyniri, mor soğan.",
+        prices:[
+          ["Küçük","350 TL"],
+          ["Orta","420 TL"],
+          ["Büyük","560 TL"],
+          ["Dev","720 TL"]
+        ]
+      },
+
+      {
+        name:"Chicken Pizza",
+        description:"Pizza sosu, pizza peyniri, kapya biber, köy biberi, mor soğan, tavuk döner.",
+        prices:[
+          ["Küçük","350 TL"],
+          ["Orta","420 TL"],
+          ["Büyük","560 TL"],
+          ["Dev","720 TL"]
+        ]
+      },
+
+      {
+        name:"Akdeniz Pizza",
+        description:"Pizza sosu, pizza peyniri, beyaz peynir, çeri domates, köy biberi, siyah zeytin, çörek otu, kekik.",
+        prices:[
+          ["Küçük","330 TL"],
+          ["Orta","370 TL"],
+          ["Büyük","500 TL"],
+          ["Dev","660 TL"]
+        ]
+      },
+
+      {
+        name:"Cheese Pizza",
+        description:"Pizza sosu, pizza peyniri, beyaz peynir, hellim peyniri, eski kaşar.",
+        prices:[
+          ["Küçük","350 TL"],
+          ["Orta","420 TL"],
+          ["Büyük","560 TL"],
+          ["Dev","720 TL"]
+        ]
+      },
+
+      {
+        name:"Vegi Pizza",
+        description:"Pizza sosu, pizza peyniri, mantar, kapya biber, köy biberi, siyah zeytin, yeşil zeytin, mısır, çeri domates.",
+        prices:[
+          ["Küçük","330 TL"],
+          ["Orta","370 TL"],
+          ["Büyük","500 TL"],
+          ["Dev","660 TL"]
+        ]
+      },
+
+      {
+        name:"Turco Pizza",
+        description:"Pizza sosu, pizza peyniri, kasap sucuk, pastırma, mantar, çeri domates, kapya biber, köy biberi, mor soğan, kekik.",
+        prices:[
+          ["Küçük","350 TL"],
+          ["Orta","420 TL"],
+          ["Büyük","560 TL"],
+          ["Dev","720 TL"]
+        ]
+      },
+
+      {
+        name:"Şark Pizza",
+        description:"Pizza sosu, pizza peyniri, kavurma, kapya biber, köy biberi, mor soğan, kekik.",
+        prices:[
+          ["Küçük","350 TL"],
+          ["Orta","420 TL"],
+          ["Büyük","560 TL"],
+          ["Dev","720 TL"]
+        ]
+      },
+
+      {
+        name:"Ege Pizza",
+        description:"Pizza sosu, pizza peyniri, sucuk, salam, sosis, cheddar peyniri.",
+        prices:[
+          ["Küçük","350 TL"],
+          ["Orta","420 TL"],
+          ["Büyük","560 TL"],
+          ["Dev","720 TL"]
+        ]
+      },
+
+      {
+        name:"Sucuklu Pizza",
+        description:"Pizza sosu, pizza peyniri, sucuk.",
+        prices:[
+          ["Küçük","350 TL"],
+          ["Orta","420 TL"],
+          ["Büyük","560 TL"],
+          ["Dev","720 TL"]
+        ]
+      },
+
+      {
+        name:"Margarita Pizza",
+        description:"Pizza sosu, extra pizza peyniri, çeri domates, fesleğen.",
+        prices:[
+          ["Küçük","330 TL"],
+          ["Orta","370 TL"],
+          ["Büyük","500 TL"],
+          ["Dev","660 TL"]
+        ]
+      },
+
+      {
+        name:"Bacon Pizza",
+        description:"Pizza sosu, pizza peyniri, dana bacon, mantar, kapya biber, eski kaşar, mor soğan, kekik.",
+        prices:[
+          ["Küçük","350 TL"],
+          ["Orta","420 TL"],
+          ["Büyük","560 TL"],
+          ["Dev","720 TL"]
+        ]
+      }
+
+    ]
+  },
+
+  burgers:{
+    label:"BURGERLER",
+    copy:"Wanted burgerleri patates ile servis edilir. Gramajını ve içeceğini seç.",
+    items:[
+
+      {
+        name:"Klasik Burger",
+        description:"Wanted'ın klasik burger deneyimi. Patates ile servis edilir.",
+        prices:[
+          ["Normal","450 TL"],
+          ["140 gr fark","+110 TL"],
+          ["220 gr fark","+170 TL"],
+          ["Kutulu içecek","+45 TL"]
+        ]
+      },
+
+      {
+        name:"Füme Burger",
+        description:"Füme karakteriyle öne çıkan Wanted burger.",
+        prices:[
+          ["Normal","540 TL"],
+          ["140 gr fark","+110 TL"],
+          ["220 gr fark","+170 TL"],
+          ["Kutulu içecek","+45 TL"]
+        ]
+      },
+
+      {
+        name:"Acılı Burger",
+        description:"Baharatlı ve güçlü aromalı burger.",
+        prices:[
+          ["Normal","480 TL"],
+          ["140 gr fark","+110 TL"],
+          ["220 gr fark","+170 TL"],
+          ["Kutulu içecek","+45 TL"]
+        ]
+      },
+
+      {
+        name:"Wanted Özel Burger",
+        description:"Wanted'ın özel burger reçetesi.",
+        prices:[
+          ["Normal","480 TL"],
+          ["140 gr fark","+110 TL"],
+          ["220 gr fark","+170 TL"],
+          ["Kutulu içecek","+45 TL"]
+        ]
+      },
+
+      {
+        name:"Tavuk Burger",
+        description:"Tavuk burger seçeneği.",
+        prices:[
+          ["Normal","385 TL"],
+          ["140 gr fark","+110 TL"],
+          ["220 gr fark","+170 TL"],
+          ["Kutulu içecek","+45 TL"]
+        ]
+      },
+
+      {
+        name:"Cheddar Burger",
+        description:"Yoğun cheddar karakteri.",
+        prices:[
+          ["Normal","480 TL"],
+          ["140 gr fark","+110 TL"],
+          ["220 gr fark","+170 TL"],
+          ["Kutulu içecek","+45 TL"]
+        ]
+      }
+
+    ]
+  },
+
+  closed:{
+    label:"KAPALI BURGER",
+    copy:"Kapalı burger serisi. Dışı farklı, içi tamamen Wanted.",
+    items:[
+
+      {
+        name:"Klasik Kapalı Burger",
+        description:"140 gr burger köftesi, 10 malzemeli özel sos, kornişon turşu, karamelize soğan.",
+        prices:[
+          ["Normal","475 TL"],
+          ["210 gr köfte","+110 TL"],
+          ["280 gr köfte","+170 TL"],
+          ["Kutulu içecek","+45 TL"]
+        ]
+      },
+
+      {
+        name:"Kapalı Chicken Burger",
+        description:"90 gr tavuk burger köftesi, 10 malzemeli özel sos, karamelize soğan, kornişon turşu, barbekü sos.",
+        prices:[
+          ["Normal","365 TL"],
+          ["210 gr köfte","+110 TL"],
+          ["280 gr köfte","+170 TL"],
+          ["Kutulu içecek","+45 TL"]
+        ]
+      },
+
+      {
+        name:"Kapalı Bacon Burger",
+        description:"140 gr burger köftesi, 10 malzemeli özel sos, cheddar peyniri, dana bacon, karamelize soğan, barbekü sos, kornişon turşu.",
+        prices:[
+          ["Normal","535 TL"],
+          ["210 gr köfte","+110 TL"],
+          ["280 gr köfte","+170 TL"],
+          ["Kutulu içecek","+45 TL"]
+        ]
+      },
+
+      {
+        name:"Kapalı Cheese Burger",
+        description:"140 gr burger köftesi, 10 malzemeli özel sos, double cheddar peyniri, karamelize soğan, kornişon turşu, domates.",
+        prices:[
+          ["Normal","485 TL"],
+          ["210 gr köfte","+110 TL"],
+          ["280 gr köfte","+170 TL"],
+          ["Kutulu içecek","+45 TL"]
+        ]
+      }
+
+    ]
+  },
+
+  panzerotti:{
+    label:"PANZEROTTI",
+    copy:"Pizza karakterini kapalı formda taşıyan Wanted Panzerotti.",
+    items:[
+
+      {
+        name:"Panzerotti Turca",
+        description:"Pizza sosu, peynir, pastırma, kasap sucuğu, mor soğan, kuru domates.",
+        prices:[
+          ["Porsiyon","385 TL"],
+          ["Kutulu içecek","+45 TL"]
+        ]
+      },
+
+      {
+        name:"Panzerotti Döner",
+        description:"Pizza sosu, peynir, et döner, mor soğan, cheddar.",
+        prices:[
+          ["Porsiyon","385 TL"],
+          ["Kutulu içecek","+45 TL"]
+        ]
+      },
+
+      {
+        name:"Panzerotti Şark",
+        description:"Pizza sosu, peynir, kavurma, mor soğan, mantar, kekik.",
+        prices:[
+          ["Porsiyon","385 TL"],
+          ["Kutulu içecek","+45 TL"]
+        ]
+      }
+
+    ]
+  },
+
+  sandwiches:{
+    label:"SANDVİÇLER",
+    copy:"Wanted'ın sandviç departmanı. Tüm sandviçler patates ile servis edilir.",
+    items:[
+
+      {
+        name:"Jambonlu Sandwich",
+        description:"Labne, zeytin ezmesi, dilim kaşar, dana jambon, domates, iceberg, sarımsak sos.",
+        prices:[
+          ["Porsiyon","385 TL"],
+          ["Kutulu içecek","+45 TL"]
+        ]
+      },
+
+      {
+        name:"Bacon Sandwich",
+        description:"Double labne, dana bacon, dilim kaşar, köz biberi, iceberg, cheddar sos.",
+        prices:[
+          ["Porsiyon","450 TL"],
+          ["Kutulu içecek","+45 TL"]
+        ]
+      },
+
+      {
+        name:"Hindi Füme Sandwich",
+        description:"Labne, zeytin ezmesi, hindi füme, dilim kaşar, çeri domates, iceberg, sarımsak sos.",
+        prices:[
+          ["Porsiyon","385 TL"],
+          ["Kutulu içecek","+45 TL"]
+        ]
+      },
+
+      {
+        name:"Kavurmalı Sandwich",
+        description:"Double labne, kavurma, köz biber, hellim peyniri, domates, mor soğan, cheddar sos.",
+        prices:[
+          ["Porsiyon","440 TL"],
+          ["Kutulu içecek","+45 TL"]
+        ]
+      }
+
+    ]
+  }
+
+};
+
+/* =========================================================
+   MENU ROLLER
+========================================================= */
+
+const tabsEl = document.getElementById("menuTabs");
+const rollerEl = document.getElementById("roller");
+
+const titleEl = document.getElementById("productTitle");
+const descEl = document.getElementById("productDescription");
+const pricesEl = document.getElementById("productPrices");
+const countEl = document.getElementById("productCount");
+
+const sideNumberEl = document.getElementById("menuSideNumber");
+const sideEyebrowEl = document.getElementById("menuSideEyebrow");
+const sideCopyEl = document.getElementById("menuSideCopy");
+
+let activeCategory = "pizzas";
+let activeProduct = 0;
+
+Object.keys(menus).forEach((key)=>{
+
+  const button = document.createElement("button");
+
+  button.className =
+    "menu-tab" +
+    (key === activeCategory ? " active" : "");
+
+  button.textContent = menus[key].label;
+
+  button.addEventListener("click",()=>{
+
+    activeCategory = key;
+    activeProduct = 0;
+
+    document.querySelectorAll(".menu-tab")
+      .forEach(btn=>btn.classList.remove("active"));
+
+    button.classList.add("active");
+
+    renderMenu();
+
+  });
+
+  tabsEl.appendChild(button);
+
+});
+
+function renderMenu(){
+
+  const category = menus[activeCategory];
+  const items = category.items;
+
+  rollerEl.innerHTML = "";
+
+  items.forEach((item,index)=>{
+
+    const el = document.createElement("div");
+
+    el.className = "roller-item";
+
+    if(index === activeProduct){
+      el.classList.add("current");
+    }
+
+    if(Math.abs(index-activeProduct) === 1){
+      el.classList.add("near");
+    }
+
+    el.textContent = item.name;
+
+    el.addEventListener("click",()=>{
+
+      activeProduct = index;
+      renderMenu();
+
+    });
+
+    rollerEl.appendChild(el);
+
+  });
+
+  const nodes = [...rollerEl.children];
+
+  nodes.forEach((node,index)=>{
+
+    const distance = index-activeProduct;
+
+    node.style.transform =
+      `translateY(${distance * 5}px)`;
+
+    node.style.opacity =
+      Math.abs(distance)>3 ? ".04" :
+      Math.abs(distance)===2 ? ".16" :
+      Math.abs(distance)===1 ? ".35" :
+      "1";
+
+  });
+
+  const product = items[activeProduct];
+
+  titleEl.textContent = product.name;
+
+  descEl.textContent = product.description;
+
+  countEl.textContent =
+    `${String(activeProduct+1).padStart(2,"0")} / ${String(items.length).padStart(2,"0")}`;
+
+  sideNumberEl.textContent =
+    String(activeProduct+1).padStart(2,"0");
+
+  sideEyebrowEl.textContent =
+    category.label;
+
+  sideCopyEl.textContent =
+    category.copy;
+
+  pricesEl.innerHTML = "";
+
+  product.prices.forEach(price=>{
+
+    const row = document.createElement("div");
+
+    row.className = "product-price";
+
+    row.innerHTML = `
+      <span>${price[0]}</span>
+      <strong>${price[1]}</strong>
+    `;
+
+    pricesEl.appendChild(row);
+
+  });
+
+}
+
+/* =========================================================
+   ROLLER DRAG
+========================================================= */
+
+let dragging = false;
+let startY = 0;
+let lastY = 0;
+
+rollerEl.addEventListener("pointerdown",(event)=>{
+
+  dragging = true;
+
+  startY = event.clientY;
+  lastY = event.clientY;
+
+  rollerEl.setPointerCapture(event.pointerId);
+
+});
+
+rollerEl.addEventListener("pointermove",(event)=>{
+
+  if(!dragging) return;
+
+  const difference = event.clientY - lastY;
+
+  if(Math.abs(event.clientY-startY) > 40){
+
+    if(event.clientY < startY){
+
+      if(
+        activeProduct <
+        menus[activeCategory].items.length-1
+      ){
+        activeProduct++;
+      }
+
+    }else{
+
+      if(activeProduct > 0){
+        activeProduct--;
+      }
+
+    }
+
+    startY = event.clientY;
+
+    renderMenu();
+
+  }
+
+  lastY = event.clientY;
+
+});
+
+rollerEl.addEventListener("pointerup",()=>{
+  dragging=false;
+});
+
+rollerEl.addEventListener("pointercancel",()=>{
+  dragging=false;
+});
+
+rollerEl.addEventListener("wheel",(event)=>{
+
+  event.preventDefault();
+
+  if(event.deltaY > 0){
+
+    if(
+      activeProduct <
+      menus[activeCategory].items.length-1
+    ){
+      activeProduct++;
+    }
+
+  }else{
+
+    if(activeProduct > 0){
+      activeProduct--;
+    }
+
+  }
+
+  renderMenu();
+
+},{passive:false});
+
+renderMenu();
+
+/* =========================================================
+   REVEAL OBSERVER
+========================================================= */
+
+const revealObserver =
+new IntersectionObserver(
+  (entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        entry.target.classList.add("visible");
+      }
+    });
+  },
+  {
+    threshold:.12,
+    rootMargin:"0px 0px -40px 0px"
+  }
+);
+
+document
+  .querySelectorAll(".reveal")
+  .forEach(element=>{
+    revealObserver.observe(element);
+  });
+
+/* =========================================================
+   CURSOR
+========================================================= */
+
+const cursorDot =
+  document.getElementById("cursorDot");
+
+const cursorRing =
+  document.getElementById("cursorRing");
+
+const cursorLabel =
+  document.getElementById("cursorLabel");
+
+let mouseX=0;
+let mouseY=0;
+let ringX=0;
+let ringY=0;
+
+window.addEventListener("mousemove",(event)=>{
+
+  mouseX=event.clientX;
+  mouseY=event.clientY;
+
+  cursorDot.style.left=mouseX+"px";
+  cursorDot.style.top=mouseY+"px";
+
+});
+
+function animateCursor(){
+
+  ringX += (mouseX-ringX)*.13;
+  ringY += (mouseY-ringY)*.13;
+
+  cursorRing.style.left=ringX+"px";
+  cursorRing.style.top=ringY+"px";
+
+  cursorLabel.style.left=ringX+"px";
+  cursorLabel.style.top=ringY+"px";
+
+  requestAnimationFrame(animateCursor);
+
+}
+
+animateCursor();
+
+function activateCursor(){
+
+  document
+    .querySelectorAll(
+      "a,button,.gallery-card,.pz-card,.philosophy-card,.combo-card,.size-card,.burger-row,.sufle-item"
+    )
+    .forEach(element=>{
+
+      element.addEventListener("mouseenter",()=>{
+        cursorRing.classList.add("hover");
+      });
+
+      element.addEventListener("mouseleave",()=>{
+        cursorRing.classList.remove("hover");
+      });
+
+    });
+
+}
+
+activateCursor();
+
+/* =========================================================
+   PARALLAX
+========================================================= */
+
+window.addEventListener("scroll",()=>{
+
+  const scrollY = window.scrollY;
+
+  const hero = document.querySelector(".hero");
+
+  if(hero){
+
+    const amount =
+      Math.min(scrollY*.16,120);
+
+    hero.style.backgroundPosition =
+      `center ${amount}px`;
+
+  }
+
+});
+
+/* =========================================================
+   NAV HIDE / SHOW
+========================================================= */
+
+let lastScroll=0;
+
+window.addEventListener("scroll",()=>{
+
+  const current =
+    window.scrollY;
+
+  const nav =
+    document.getElementById("nav");
+
+  if(current > lastScroll && current > 150){
+
+    nav.classList.add("hidden");
+
+  }else{
+
+    nav.classList.remove("hidden");
+
+  }
+
+  lastScroll=current;
+
+});
+
+/* =========================================================
+   MOBILE MENU
+========================================================= */
+
+const mobileToggle =
+  document.getElementById("mobileToggle");
+
+const mobileMenu =
+  document.getElementById("mobileMenu");
+
+mobileToggle.addEventListener("click",()=>{
+
+  mobileMenu.classList.toggle("open");
+
+  document.body.classList.toggle(
+    "locked",
+    mobileMenu.classList.contains("open")
+  );
+
+});
+
+document
+  .querySelectorAll(".mobile-menu a")
+  .forEach(link=>{
+
+    link.addEventListener("click",()=>{
+
+      mobileMenu.classList.remove("open");
+
+      document.body.classList.remove("locked");
+
+    });
+
+  });
+
+/* =========================================================
+   ORDER MODAL
+========================================================= */
+
+const modal =
+  document.getElementById("orderModal");
+
+const modalClose =
+  document.getElementById("modalClose");
+
+const modalClose2 =
+  document.getElementById("modalClose2");
+
+function openModal(){
+
+  modal.classList.add("open");
+
+  document.body.classList.add("locked");
+
+}
+
+function closeModal(){
+
+  modal.classList.remove("open");
+
+  document.body.classList.remove("locked");
+
+}
+
+document
+  .querySelectorAll(".nav-order")
+  .forEach(button=>{
+
+    button.addEventListener("click",(event)=>{
+
+      event.preventDefault();
+
+      openModal();
+
+    });
+
+  });
+
+modalClose.addEventListener(
+  "click",
+  closeModal
+);
+
+modalClose2.addEventListener(
+  "click",
+  closeModal
+);
+
+modal.addEventListener("click",(event)=>{
+
+  if(event.target === modal){
+    closeModal();
+  }
+
+});
+
+window.addEventListener("keydown",(event)=>{
+
+  if(event.key === "Escape"){
+    closeModal();
+  }
+
+});
+
+/* =========================================================
+   GALLERY DRAG
+========================================================= */
+
+const galleryTrack =
+  document.querySelector(".gallery-track");
+
+let galleryDown=false;
+let galleryStart=0;
+let galleryMove=0;
+
+galleryTrack.addEventListener("pointerdown",(event)=>{
+
+  galleryDown=true;
+
+  galleryStart=event.clientX;
+  galleryMove=galleryTrack.offsetLeft;
+
+  galleryTrack.setPointerCapture(event.pointerId);
+
+});
+
+galleryTrack.addEventListener("pointermove",(event)=>{
+
+  if(!galleryDown)return;
+
+  const diff =
+    event.clientX-galleryStart;
+
+  galleryTrack.style.transform =
+    `translateX(calc(-4% + ${diff}px))`;
+
+});
+
+galleryTrack.addEventListener("pointerup",()=>{
+
+  galleryDown=false;
+
+});
+
+galleryTrack.addEventListener("pointercancel",()=>{
+
+  galleryDown=false;
+
+});
+
+/* =========================================================
+   IMAGE ERROR FALLBACK
+========================================================= */
+
+document
+  .querySelectorAll("img")
+  .forEach(img=>{
+
+    img.addEventListener("error",()=>{
+
+      img.style.display="none";
+
+    });
+
+  });
+
+/* =========================================================
+   LOADER
+========================================================= */
+
+window.addEventListener("load",()=>{
+
+  setTimeout(()=>{
+
+    document
+      .getElementById("loader")
+      .classList.add("hide");
+
+  },2200);
+
+});
+
+/* =========================================================
+   ACTIVE SECTION LINK
+========================================================= */
+
+const sections =
+  document.querySelectorAll(
+    "section[id]"
+  );
+
+const navAnchors =
+  document.querySelectorAll(
+    ".nav-links a"
+  );
+
+const activeObserver =
+new IntersectionObserver(
+  entries=>{
+
+    entries.forEach(entry=>{
+
+      if(entry.isIntersecting){
+
+        navAnchors.forEach(anchor=>{
+
+          anchor.style.opacity =
+            anchor.getAttribute("href") ===
+            "#"+entry.target.id
+            ? "1"
+            : ".55";
+
+        });
+
+      }
+
+    });
+
+  },
+  {
+    rootMargin:"-45% 0px -45% 0px"
+  }
+);
+
+sections.forEach(section=>{
+  activeObserver.observe(section);
+});
+
+/* =========================================================
+   SMOOTH IMAGE REVEAL
+========================================================= */
+
+const imageObserver =
+new IntersectionObserver(
+  entries=>{
+
+    entries.forEach(entry=>{
+
+      if(entry.isIntersecting){
+
+        entry.target.style.opacity="1";
+
+      }
+
+    });
+
+  },
+  {
+    threshold:.1
+  }
+);
+
+document
+  .querySelectorAll(".story-photo img,.burger-visual img,.gallery-card img")
+  .forEach(img=>{
+
+    img.style.opacity="0";
+    img.style.transition=
+      "opacity 1.2s var(--ease), transform 1.2s var(--ease)";
+
+    imageObserver.observe(img);
+
+  });
+
+/* =========================================================
+   CONSOLE BRANDING
+========================================================= */
+
+console.log(`
+╔══════════════════════════════════════════════╗
+║             WANTED PIZZA BURGER              ║
+║                  EST. 2009                   ║
+║              ESKİŞEHİR / TR                  ║
+╚══════════════════════════════════════════════╝
+`);
+
+</script>
+
+</body>
+</html>
