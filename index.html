@@ -978,7 +978,7 @@ section{
   text-transform:uppercase;
   letter-spacing:.16em;
   font-size:8px;
-  transition:none;
+  transition:.35s var(--ease);
 }
 
 .menu-tab:hover,
@@ -989,116 +989,143 @@ section{
 }
 
 .menu-panel{
-  display:grid;
-  grid-template-columns:.72fr 1.45fr;
+  display:block;
   min-height:0;
   border-top:1px solid var(--line);
   border-bottom:1px solid var(--line);
+  overflow:hidden;
+  position:relative;
 }
 
-.menu-side{
-  padding:45px 35px 45px 0;
-  border-right:1px solid var(--line);
-}
-
-.menu-side-number{
-  font-family:"Bebas Neue";
-  font-size:150px;
-  line-height:.6;
-  color:rgba(238,226,204,.055);
-}
-
-.menu-side-copy{
-  margin-top:70px;
-  color:var(--muted);
-  font-size:10px;
-  line-height:1.8;
+.menu-side,
+.menu-right{
+  display:none;
 }
 
 .menu-center{
-  padding:0 0 0 5vw;
+  width:100%;
+  padding:34px 0 38px;
   position:relative;
   display:block;
+  overflow:hidden;
+}
+
+.menu-center:before,
+.menu-center:after{
+  display:none;
 }
 
 .roller{
   width:100%;
   height:auto;
-  overflow:visible;
-  touch-action:auto;
-  user-select:auto;
-  cursor:default;
+  overflow:hidden;
+  touch-action:pan-y;
+  user-select:none;
+  cursor:grab;
+  position:relative;
+  padding:0;
+}
+
+.roller.dragging{
+  cursor:grabbing;
+}
+
+.roller-track{
   display:flex;
-  flex-direction:column;
+  align-items:stretch;
+  width:max-content;
+  will-change:transform;
+  transition:transform .42s cubic-bezier(.22,.8,.25,1);
 }
 
 .roller-item{
-  width:100%;
+  flex:0 0 34vw;
+  max-width:420px;
+  min-width:260px;
   box-sizing:border-box;
-  padding:28px 0;
-  border-bottom:1px solid var(--line);
-  color:var(--paper);
   font-family:inherit;
   text-transform:none;
-  font-size:inherit;
-  line-height:1.5;
-  transform:none !important;
-  opacity:1 !important;
-  transition:none !important;
+  color:rgba(238,226,204,.34);
+  padding:20px 28px 24px;
+  border-right:1px solid rgba(238,226,204,.14);
+  text-align:center;
+  transform-origin:center center;
+  transition:
+    color .42s var(--ease),
+    transform .42s var(--ease),
+    opacity .42s var(--ease),
+    filter .42s var(--ease);
+  opacity:.42;
+  transform:scale(.78);
 }
 
-.roller-item.near,
+.roller-item:first-child{
+  border-left:1px solid rgba(238,226,204,.14);
+}
+
+.roller-item.near{
+  color:rgba(238,226,204,.5);
+  opacity:.62;
+  transform:scale(.86);
+}
+
 .roller-item.current{
   color:var(--paper);
-  font-size:inherit;
-  transform:none !important;
-  opacity:1 !important;
+  opacity:1;
+  transform:scale(1);
+  filter:none;
+}
+
+.roller-product-type{
+  color:var(--gold);
+  font-family:"Special Elite";
+  font-size:8px;
+  letter-spacing:.22em;
+  margin-bottom:12px;
 }
 
 .roller-product-name{
-  display:block;
   font-family:"Bebas Neue";
-  font-size:clamp(28px,3.2vw,52px);
-  line-height:.9;
+  font-size:clamp(34px,4vw,62px);
+  line-height:.88;
   text-transform:uppercase;
-  margin-bottom:16px;
+  margin-bottom:14px;
+  white-space:normal;
 }
 
 .roller-product-description{
   color:var(--muted);
-  font-size:10px;
-  line-height:1.8;
-  max-width:720px;
-  margin-bottom:20px;
+  font-size:9px;
+  line-height:1.75;
+  max-width:340px;
+  min-height:64px;
+  margin:0 auto;
 }
 
 .roller-product-prices{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(130px,1fr));
-  gap:0 22px;
   border-top:1px solid var(--line);
+  margin-top:20px;
+  padding-top:13px;
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:8px 18px;
 }
 
 .roller-product-price{
   display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:12px;
-  padding:11px 0;
-  border-bottom:1px solid var(--line);
+  align-items:baseline;
+  gap:7px;
+  white-space:nowrap;
   font-size:8px;
   letter-spacing:.08em;
 }
 
 .roller-product-price strong{
+  color:#d52f25;
   font-family:"Oswald";
-  font-size:17px;
+  font-size:18px;
   font-weight:400;
-  white-space:nowrap;
-}
-
-.menu-right{
-  display:none;
 }
 
 .product-count,
@@ -1109,12 +1136,110 @@ section{
   display:none;
 }
 
-.product-note{
-  margin-top:24px;
-  color:rgba(238,226,204,.3);
-  font-size:7px;
-  letter-spacing:.18em;
-  text-transform:uppercase;
+/* =========================================================
+   HORIZONTAL MENU RESPONSIVE
+========================================================= */
+
+@media(max-width:1100px){
+
+  .roller-item{
+    flex-basis:38vw;
+  }
+
+  .menu-center{
+    padding-left:0;
+    padding-right:0;
+  }
+}
+
+@media(max-width:850px){
+
+  .menu-panel{
+    grid-template-columns:1fr;
+  }
+
+  .menu-center{
+    min-height:0;
+    padding:24px 0 28px;
+  }
+
+  .roller-item{
+    flex-basis:60vw;
+    min-width:0;
+    padding:18px 18px 22px;
+  }
+
+  .roller-product-name{
+    font-size:clamp(32px,9vw,50px);
+  }
+
+  .roller-product-description{
+    font-size:9px;
+    min-height:76px;
+  }
+
+  .roller-product-prices{
+    margin-top:16px;
+    padding-top:11px;
+    gap:7px 12px;
+  }
+}
+
+@media(max-width:560px){
+
+  .menu{
+    overflow:hidden;
+  }
+
+  .menu-tabs{
+    flex-wrap:wrap;
+    overflow:visible;
+    gap:6px;
+  }
+
+  .menu-tab{
+    padding:10px 12px;
+    font-size:7px;
+  }
+
+  .menu-panel{
+    width:100%;
+    overflow:hidden;
+  }
+
+  .menu-center{
+    width:100%;
+    padding:20px 0 24px;
+    overflow:hidden;
+  }
+
+  .roller{
+    width:100%;
+    overflow:hidden;
+    touch-action:pan-y;
+  }
+
+  .roller-item{
+    flex-basis:72vw;
+    padding:16px 12px 20px;
+  }
+
+  .roller-product-name{
+    font-size:clamp(30px,9vw,43px);
+  }
+
+  .roller-product-description{
+    font-size:8.5px;
+    line-height:1.7;
+    min-height:70px;
+  }
+
+  .roller-product-prices{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:5px;
+  }
 }
 
 /* =========================================================
@@ -2661,16 +2786,8 @@ section{
     height:350px;
   }
 
-  .roller-item{
-    padding:24px 0;
-  }
-
-  .roller-product-name{
-    font-size:13vw;
-  }
-
-  .roller-product-prices{
-    grid-template-columns:1fr;
+  .roller-item.current{
+    font-size:18vw;
   }
 
   .product-title{
@@ -2923,6 +3040,85 @@ section{
     font-size:60px;
   }
 }
+
+/* FINAL MENU OVERRIDES — keep the new horizontal carousel above older responsive rules */
+.menu-panel{
+  display:block !important;
+  grid-template-columns:none !important;
+  min-height:0 !important;
+  overflow:hidden !important;
+}
+.menu-side,
+.menu-right{
+  display:none !important;
+}
+.menu-center{
+  display:block !important;
+  min-height:0 !important;
+  width:100% !important;
+  padding:34px 0 38px !important;
+  overflow:hidden !important;
+}
+.roller{
+  width:100% !important;
+  height:auto !important;
+  overflow:hidden !important;
+  touch-action:pan-y !important;
+  cursor:grab !important;
+}
+.roller.dragging{
+  cursor:grabbing !important;
+}
+.roller-track{
+  display:flex !important;
+  width:max-content !important;
+}
+.roller-item{
+  flex:0 0 34vw !important;
+  min-width:260px !important;
+  max-width:420px !important;
+}
+.roller-item.current{
+  font-size:inherit !important;
+  transform:scale(1) !important;
+}
+@media(max-width:1100px){
+  .roller-item{
+    flex-basis:38vw !important;
+  }
+}
+@media(max-width:850px){
+  .menu-center{
+    min-height:0 !important;
+    padding:24px 0 28px !important;
+  }
+  .roller-item{
+    flex-basis:60vw !important;
+    min-width:0 !important;
+  }
+  .roller-item.current{
+    font-size:inherit !important;
+  }
+}
+@media(max-width:560px){
+  .menu{
+    overflow:hidden !important;
+  }
+  .menu-center{
+    padding:20px 0 24px !important;
+  }
+  .roller{
+    height:auto !important;
+    overflow:hidden !important;
+  }
+  .roller-item{
+    flex-basis:72vw !important;
+  }
+  .roller-item.current{
+    font-size:inherit !important;
+  }
+}
+
 </style>
 </head>
 
@@ -3215,7 +3411,8 @@ section{
       </div>
 
       <p>
-        Tüm ürünleri içerikleri ve fiyatlarıyla birlikte görüntüle.
+        Ürünlerin arasında dolaş.
+        Fare tekerleğini kullan veya ürün alanını yukarı-aşağı sürükle.
       </p>
     </div>
 
@@ -3223,46 +3420,15 @@ section{
 
     <div class="menu-panel">
 
-      <aside class="menu-side">
-        <div class="menu-side-number" id="menuSideNumber">01</div>
-
-        <div class="menu-side-copy">
-          <div class="eyebrow" id="menuSideEyebrow">
-            PİZZALAR
-          </div>
-
-          <p id="menuSideCopy">
-            Wanted'ın imzası.
-            Klasiklerden cesur kombinasyonlara kadar geniş pizza seçkisi.
-          </p>
-        </div>
-      </aside>
-
       <div class="menu-center">
 
-        <div class="roller" id="roller"></div>
+        <div class="roller" id="roller">
+          <div class="roller-track" id="rollerTrack"></div>
+        </div>
 
       </div>
 
-      <aside class="menu-right">
-
-        <div class="product-count" id="productCount">
-          01 / 13
-        </div>
-
-        <h3 class="product-title" id="productTitle">
-          Wanted Mix Pizza
-        </h3>
-
-        <p class="product-description" id="productDescription"></p>
-
-        <div class="product-prices" id="productPrices"></div>
-
-        <div class="product-note">
-          ↑ ↓ SÜRÜKLE / MOUSE WHEEL / TOUCH
-        </div>
-
-      </aside>
+      <!-- Existing category/product detail elements remain outside the visual menu system. -->
 
     </div>
 
@@ -4894,22 +5060,19 @@ const menus = {
 };
 
 /* =========================================================
-   MENU ROLLER
+   MENU — HORIZONTAL SWIPE CAROUSEL
 ========================================================= */
 
 const tabsEl = document.getElementById("menuTabs");
 const rollerEl = document.getElementById("roller");
-
-const titleEl = document.getElementById("productTitle");
-const descEl = document.getElementById("productDescription");
-const pricesEl = document.getElementById("productPrices");
-const countEl = document.getElementById("productCount");
+const rollerTrackEl = document.getElementById("rollerTrack");
 
 const sideNumberEl = document.getElementById("menuSideNumber");
 const sideEyebrowEl = document.getElementById("menuSideEyebrow");
 const sideCopyEl = document.getElementById("menuSideCopy");
 
 let activeCategory = "pizzas";
+let activeProduct = 0;
 
 Object.keys(menus).forEach((key)=>{
 
@@ -4924,6 +5087,8 @@ Object.keys(menus).forEach((key)=>{
   button.addEventListener("click",()=>{
 
     activeCategory = key;
+    activeProduct = 0;
+
     document.querySelectorAll(".menu-tab")
       .forEach(btn=>btn.classList.remove("active"));
 
@@ -4937,63 +5102,242 @@ Object.keys(menus).forEach((key)=>{
 
 });
 
+function updateCarouselPosition(animate=true){
+
+  const items = [...rollerTrackEl.children];
+  const current = items[activeProduct];
+
+  if(!current) return;
+
+  const itemWidth = current.getBoundingClientRect().width;
+  const centerOffset =
+    (rollerEl.clientWidth - itemWidth) / 2;
+
+  const targetX =
+    centerOffset - (activeProduct * itemWidth);
+
+  rollerTrackEl.style.transition =
+    animate
+      ? "transform .42s cubic-bezier(.22,.8,.25,1)"
+      : "none";
+
+  rollerTrackEl.style.transform =
+    `translate3d(${targetX}px,0,0)`;
+
+  items.forEach((node,index)=>{
+
+    const distance = index - activeProduct;
+    const abs = Math.abs(distance);
+
+    node.classList.toggle(
+      "current",
+      index === activeProduct
+    );
+
+    node.classList.toggle(
+      "near",
+      abs === 1
+    );
+
+    if(index === activeProduct){
+      node.style.opacity = "1";
+      node.style.transform = "scale(1)";
+    }else if(abs === 1){
+      node.style.opacity = ".62";
+      node.style.transform = "scale(.86)";
+    }else{
+      node.style.opacity = ".28";
+      node.style.transform = "scale(.78)";
+    }
+
+  });
+
+  if(sideNumberEl){
+    sideNumberEl.textContent =
+      String(activeProduct+1).padStart(2,"0");
+  }
+
+  if(sideEyebrowEl){
+    sideEyebrowEl.textContent =
+      menus[activeCategory].label;
+  }
+
+  if(sideCopyEl){
+    sideCopyEl.textContent =
+      menus[activeCategory].copy;
+  }
+}
+
 function renderMenu(){
 
   const category = menus[activeCategory];
   const items = category.items;
 
-  rollerEl.innerHTML = "";
+  if(activeProduct >= items.length){
+    activeProduct = items.length - 1;
+  }
 
-  items.forEach((item)=>{
+  rollerTrackEl.innerHTML = "";
 
-    const el = document.createElement("div");
+  items.forEach((item,index)=>{
+
+    const el = document.createElement("article");
+
     el.className = "roller-item";
 
-    const name = document.createElement("div");
-    name.className = "roller-product-name";
-    name.textContent = item.name;
+    const pricesHTML = item.prices.map(price=>`
+      <div class="roller-product-price">
+        <span>${price[0]}</span>
+        <strong>${price[1]}</strong>
+      </div>
+    `).join("");
 
-    const description = document.createElement("div");
-    description.className = "roller-product-description";
-    description.textContent = item.description;
+    el.innerHTML = `
+      <div class="roller-product-type">${category.label}</div>
 
-    const prices = document.createElement("div");
-    prices.className = "roller-product-prices";
+      <div class="roller-product-name">
+        ${item.name}
+      </div>
 
-    item.prices.forEach((price)=>{
+      <div class="roller-product-description">
+        ${item.description}
+      </div>
 
-      const row = document.createElement("div");
-      row.className = "roller-product-price";
+      <div class="roller-product-prices">
+        ${pricesHTML}
+      </div>
+    `;
 
-      const label = document.createElement("span");
-      label.textContent = price[0];
+    el.addEventListener("click",()=>{
 
-      const value = document.createElement("strong");
-      value.textContent = price[1];
-
-      row.appendChild(label);
-      row.appendChild(value);
-      prices.appendChild(row);
+      if(index !== activeProduct){
+        activeProduct = index;
+        updateCarouselPosition();
+      }
 
     });
 
-    el.appendChild(name);
-    el.appendChild(description);
-    el.appendChild(prices);
-    rollerEl.appendChild(el);
+    rollerTrackEl.appendChild(el);
 
   });
 
-  sideNumberEl.textContent =
-    String(items.length).padStart(2,"0");
-
-  sideEyebrowEl.textContent =
-    category.label;
-
-  sideCopyEl.textContent =
-    category.copy;
-
+  updateCarouselPosition(false);
 }
+
+function moveProduct(direction){
+
+  const total =
+    menus[activeCategory].items.length;
+
+  const next =
+    activeProduct + direction;
+
+  if(next < 0 || next >= total) return;
+
+  activeProduct = next;
+  updateCarouselPosition();
+}
+
+/* =========================================================
+   HORIZONTAL TOUCH / MOUSE DRAG
+========================================================= */
+
+let dragging = false;
+let dragStartX = 0;
+let dragLastX = 0;
+let dragDistance = 0;
+
+rollerEl.addEventListener("pointerdown",(event)=>{
+
+  dragging = true;
+  dragStartX = event.clientX;
+  dragLastX = event.clientX;
+  dragDistance = 0;
+
+  rollerEl.classList.add("dragging");
+  rollerEl.setPointerCapture(event.pointerId);
+
+  rollerTrackEl.style.transition = "none";
+
+});
+
+rollerEl.addEventListener("pointermove",(event)=>{
+
+  if(!dragging) return;
+
+  const delta = event.clientX - dragLastX;
+
+  dragDistance += event.clientX - dragLastX;
+  dragLastX = event.clientX;
+
+  const items = [...rollerTrackEl.children];
+  const current = items[activeProduct];
+
+  if(!current) return;
+
+  const itemWidth = current.getBoundingClientRect().width;
+  const centerOffset =
+    (rollerEl.clientWidth - itemWidth) / 2;
+
+  const baseX =
+    centerOffset - (activeProduct * itemWidth);
+
+  rollerTrackEl.style.transform =
+    `translate3d(${baseX + dragDistance}px,0,0)`;
+
+});
+
+function finishDrag(){
+
+  if(!dragging) return;
+
+  dragging = false;
+  rollerEl.classList.remove("dragging");
+
+  const threshold = Math.max(35, rollerEl.clientWidth * .08);
+
+  if(Math.abs(dragDistance) >= threshold){
+
+    if(dragDistance < 0){
+      moveProduct(1);
+    }else{
+      moveProduct(-1);
+    }
+
+  }else{
+
+    updateCarouselPosition();
+
+  }
+
+  dragDistance = 0;
+}
+
+rollerEl.addEventListener("pointerup",finishDrag);
+rollerEl.addEventListener("pointercancel",finishDrag);
+/* Mouse wheel / trackpad support */
+rollerEl.addEventListener("wheel",(event)=>{
+
+  if(Math.abs(event.deltaX) < Math.abs(event.deltaY)){
+    event.preventDefault();
+  }
+
+  if(Math.abs(event.deltaX) > 8){
+    event.preventDefault();
+    moveProduct(event.deltaX > 0 ? 1 : -1);
+    return;
+  }
+
+  if(Math.abs(event.deltaY) > 8){
+    event.preventDefault();
+    moveProduct(event.deltaY > 0 ? 1 : -1);
+  }
+
+},{passive:false});
+
+window.addEventListener("resize",()=>{
+  updateCarouselPosition(false);
+});
 
 renderMenu();
 
