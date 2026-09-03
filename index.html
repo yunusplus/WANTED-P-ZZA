@@ -978,7 +978,7 @@ section{
   text-transform:uppercase;
   letter-spacing:.16em;
   font-size:8px;
-  transition:.35s var(--ease);
+  transition:none;
 }
 
 .menu-tab:hover,
@@ -990,8 +990,8 @@ section{
 
 .menu-panel{
   display:grid;
-  grid-template-columns:.72fr 1.45fr .8fr;
-  min-height:720px;
+  grid-template-columns:.72fr 1.45fr;
+  min-height:0;
   border-top:1px solid var(--line);
   border-bottom:1px solid var(--line);
 }
@@ -1016,123 +1016,97 @@ section{
 }
 
 .menu-center{
-  padding:45px 5vw;
+  padding:0 0 0 5vw;
   position:relative;
-  display:flex;
-  align-items:center;
-}
-
-.menu-center:before{
-  content:"";
-  position:absolute;
-  top:0;
-  left:0;
-  right:0;
-  height:150px;
-  background:linear-gradient(var(--bg),transparent);
-  pointer-events:none;
-  z-index:3;
-}
-
-.menu-center:after{
-  content:"";
-  position:absolute;
-  bottom:0;
-  left:0;
-  right:0;
-  height:150px;
-  background:linear-gradient(transparent,var(--bg));
-  pointer-events:none;
-  z-index:3;
+  display:block;
 }
 
 .roller{
   width:100%;
-  height:540px;
-  overflow:hidden;
-  touch-action:none;
-  user-select:none;
-  cursor:ns-resize;
+  height:auto;
+  overflow:visible;
+  touch-action:auto;
+  user-select:auto;
+  cursor:default;
   display:flex;
   flex-direction:column;
-  justify-content:center;
 }
 
 .roller-item{
-  font-family:"Bebas Neue";
-  text-transform:uppercase;
-  color:rgba(238,226,204,.1);
-  font-size:clamp(35px,4.5vw,73px);
-  line-height:.82;
-  padding:13px 0;
-  transform-origin:left center;
-  transition:
-    color .5s var(--ease),
-    transform .5s var(--ease),
-    font-size .5s var(--ease),
-    opacity .5s;
+  width:100%;
+  box-sizing:border-box;
+  padding:28px 0;
+  border-bottom:1px solid var(--line);
+  color:var(--paper);
+  font-family:inherit;
+  text-transform:none;
+  font-size:inherit;
+  line-height:1.5;
+  transform:none !important;
+  opacity:1 !important;
+  transition:none !important;
 }
 
-.roller-item.near{
-  color:rgba(238,226,204,.31);
-}
-
+.roller-item.near,
 .roller-item.current{
   color:var(--paper);
-  font-size:clamp(55px,6.3vw,105px);
-  transform:translateX(0) !important;
+  font-size:inherit;
+  transform:none !important;
+  opacity:1 !important;
 }
 
-.menu-right{
-  padding:45px 0 45px 4vw;
-  border-left:1px solid var(--line);
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-}
-
-.product-count{
-  color:var(--gold);
-  font-family:"Special Elite";
-  font-size:9px;
-  letter-spacing:.18em;
-  margin-bottom:25px;
-}
-
-.product-title{
+.roller-product-name{
+  display:block;
   font-family:"Bebas Neue";
-  font-size:56px;
-  line-height:.78;
-  margin-bottom:25px;
+  font-size:clamp(28px,3.2vw,52px);
+  line-height:.9;
+  text-transform:uppercase;
+  margin-bottom:16px;
 }
 
-.product-description{
+.roller-product-description{
   color:var(--muted);
   font-size:10px;
   line-height:1.8;
-  min-height:95px;
-  max-width:290px;
+  max-width:720px;
+  margin-bottom:20px;
 }
 
-.product-prices{
-  margin-top:30px;
+.roller-product-prices{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(130px,1fr));
+  gap:0 22px;
   border-top:1px solid var(--line);
 }
 
-.product-price{
+.roller-product-price{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  padding:13px 0;
+  gap:12px;
+  padding:11px 0;
   border-bottom:1px solid var(--line);
   font-size:8px;
   letter-spacing:.08em;
 }
 
-.product-price strong{
+.roller-product-price strong{
   font-family:"Oswald";
   font-size:17px;
   font-weight:400;
+  white-space:nowrap;
+}
+
+.menu-right{
+  display:none;
+}
+
+.product-count,
+.product-title,
+.product-description,
+.product-prices,
+.product-note{
+  display:none;
 }
 
 .product-note{
@@ -2687,8 +2661,16 @@ section{
     height:350px;
   }
 
-  .roller-item.current{
-    font-size:18vw;
+  .roller-item{
+    padding:24px 0;
+  }
+
+  .roller-product-name{
+    font-size:13vw;
+  }
+
+  .roller-product-prices{
+    grid-template-columns:1fr;
   }
 
   .product-title{
@@ -3233,8 +3215,7 @@ section{
       </div>
 
       <p>
-        Ürünlerin arasında dolaş.
-        Fare tekerleğini kullan veya ürün alanını yukarı-aşağı sürükle.
+        Tüm ürünleri içerikleri ve fiyatlarıyla birlikte görüntüle.
       </p>
     </div>
 
@@ -4929,7 +4910,6 @@ const sideEyebrowEl = document.getElementById("menuSideEyebrow");
 const sideCopyEl = document.getElementById("menuSideCopy");
 
 let activeCategory = "pizzas";
-let activeProduct = 0;
 
 Object.keys(menus).forEach((key)=>{
 
@@ -4944,8 +4924,6 @@ Object.keys(menus).forEach((key)=>{
   button.addEventListener("click",()=>{
 
     activeCategory = key;
-    activeProduct = 0;
-
     document.querySelectorAll(".menu-tab")
       .forEach(btn=>btn.classList.remove("active"));
 
@@ -4966,61 +4944,48 @@ function renderMenu(){
 
   rollerEl.innerHTML = "";
 
-  items.forEach((item,index)=>{
+  items.forEach((item)=>{
 
     const el = document.createElement("div");
-
     el.className = "roller-item";
 
-    if(index === activeProduct){
-      el.classList.add("current");
-    }
+    const name = document.createElement("div");
+    name.className = "roller-product-name";
+    name.textContent = item.name;
 
-    if(Math.abs(index-activeProduct) === 1){
-      el.classList.add("near");
-    }
+    const description = document.createElement("div");
+    description.className = "roller-product-description";
+    description.textContent = item.description;
 
-    el.textContent = item.name;
+    const prices = document.createElement("div");
+    prices.className = "roller-product-prices";
 
-    el.addEventListener("click",()=>{
+    item.prices.forEach((price)=>{
 
-      activeProduct = index;
-      renderMenu();
+      const row = document.createElement("div");
+      row.className = "roller-product-price";
+
+      const label = document.createElement("span");
+      label.textContent = price[0];
+
+      const value = document.createElement("strong");
+      value.textContent = price[1];
+
+      row.appendChild(label);
+      row.appendChild(value);
+      prices.appendChild(row);
 
     });
 
+    el.appendChild(name);
+    el.appendChild(description);
+    el.appendChild(prices);
     rollerEl.appendChild(el);
 
   });
 
-  const nodes = [...rollerEl.children];
-
-  nodes.forEach((node,index)=>{
-
-    const distance = index-activeProduct;
-
-    node.style.transform =
-      `translateY(${distance * 5}px)`;
-
-    node.style.opacity =
-      Math.abs(distance)>3 ? ".04" :
-      Math.abs(distance)===2 ? ".16" :
-      Math.abs(distance)===1 ? ".35" :
-      "1";
-
-  });
-
-  const product = items[activeProduct];
-
-  titleEl.textContent = product.name;
-
-  descEl.textContent = product.description;
-
-  countEl.textContent =
-    `${String(activeProduct+1).padStart(2,"0")} / ${String(items.length).padStart(2,"0")}`;
-
   sideNumberEl.textContent =
-    String(activeProduct+1).padStart(2,"0");
+    String(items.length).padStart(2,"0");
 
   sideEyebrowEl.textContent =
     category.label;
@@ -5028,111 +4993,7 @@ function renderMenu(){
   sideCopyEl.textContent =
     category.copy;
 
-  pricesEl.innerHTML = "";
-
-  product.prices.forEach(price=>{
-
-    const row = document.createElement("div");
-
-    row.className = "product-price";
-
-    row.innerHTML = `
-      <span>${price[0]}</span>
-      <strong>${price[1]}</strong>
-    `;
-
-    pricesEl.appendChild(row);
-
-  });
-
 }
-
-/* =========================================================
-   ROLLER DRAG
-========================================================= */
-
-let dragging = false;
-let startY = 0;
-let lastY = 0;
-
-rollerEl.addEventListener("pointerdown",(event)=>{
-
-  dragging = true;
-
-  startY = event.clientY;
-  lastY = event.clientY;
-
-  rollerEl.setPointerCapture(event.pointerId);
-
-});
-
-rollerEl.addEventListener("pointermove",(event)=>{
-
-  if(!dragging) return;
-
-  const difference = event.clientY - lastY;
-
-  if(Math.abs(event.clientY-startY) > 40){
-
-    if(event.clientY < startY){
-
-      if(
-        activeProduct <
-        menus[activeCategory].items.length-1
-      ){
-        activeProduct++;
-      }
-
-    }else{
-
-      if(activeProduct > 0){
-        activeProduct--;
-      }
-
-    }
-
-    startY = event.clientY;
-
-    renderMenu();
-
-  }
-
-  lastY = event.clientY;
-
-});
-
-rollerEl.addEventListener("pointerup",()=>{
-  dragging=false;
-});
-
-rollerEl.addEventListener("pointercancel",()=>{
-  dragging=false;
-});
-
-rollerEl.addEventListener("wheel",(event)=>{
-
-  event.preventDefault();
-
-  if(event.deltaY > 0){
-
-    if(
-      activeProduct <
-      menus[activeCategory].items.length-1
-    ){
-      activeProduct++;
-    }
-
-  }else{
-
-    if(activeProduct > 0){
-      activeProduct--;
-    }
-
-  }
-
-  renderMenu();
-
-},{passive:false});
 
 renderMenu();
 
