@@ -949,28 +949,26 @@ section{
     linear-gradient(rgba(8,7,6,.94),rgba(8,7,6,.98)),
     url("https://images.unsplash.com/photo-1579751626657-72bc17010498?auto=format&fit=crop&w=2200&q=80")
     center/cover fixed;
+  overflow-x:clip;
 }
 
 .menu-wrap{
   width:min(1500px,92%);
   margin:auto;
+  min-width:0;
 }
 
 .menu-tabs{
   display:flex;
+  flex-wrap:wrap;
   gap:7px;
-  overflow-x:auto;
-  scrollbar-width:none;
+  overflow:visible;
   padding-bottom:15px;
   margin-bottom:25px;
 }
 
-.menu-tabs::-webkit-scrollbar{
-  display:none;
-}
-
 .menu-tab{
-  flex:none;
+  flex:0 0 auto;
   background:transparent;
   color:var(--muted);
   border:1px solid var(--line);
@@ -978,7 +976,7 @@ section{
   text-transform:uppercase;
   letter-spacing:.16em;
   font-size:8px;
-  transition:.35s var(--ease);
+  transition:.25s var(--ease);
 }
 
 .menu-tab:hover,
@@ -989,12 +987,12 @@ section{
 }
 
 .menu-panel{
-  display:block;
-  min-height:0;
+  width:100%;
+  min-width:0;
   border-top:1px solid var(--line);
   border-bottom:1px solid var(--line);
-  overflow:hidden;
   position:relative;
+  overflow:hidden;
 }
 
 .menu-side,
@@ -1004,7 +1002,8 @@ section{
 
 .menu-center{
   width:100%;
-  padding:34px 0 38px;
+  min-width:0;
+  padding:24px 0 28px;
   position:relative;
   display:block;
   overflow:hidden;
@@ -1015,65 +1014,76 @@ section{
   display:none;
 }
 
+/* Simple, native horizontal menu: no translated track, so mobile can never expose a fake black side area. */
 .roller{
   width:100%;
-  height:auto;
-  overflow:hidden;
-  touch-action:pan-y;
+  max-width:100%;
+  min-width:0;
+  overflow-x:auto;
+  overflow-y:hidden;
+  overscroll-behavior-x:contain;
+  -webkit-overflow-scrolling:touch;
+  scroll-snap-type:x mandatory;
+  scroll-behavior:smooth;
+  scroll-padding-inline:50%;
+  touch-action:pan-x;
   user-select:none;
   cursor:grab;
+  scrollbar-width:none;
   position:relative;
-  padding:0;
+}
+
+.roller::-webkit-scrollbar{
+  display:none;
 }
 
 .roller.dragging{
   cursor:grabbing;
+  scroll-behavior:auto;
 }
 
 .roller-track{
   display:flex;
   align-items:stretch;
   width:max-content;
-  will-change:transform;
-  transition:transform .42s cubic-bezier(.22,.8,.25,1);
+  min-width:100%;
+  box-sizing:border-box;
+  padding-inline:calc((100% - 68vw)/2);
 }
 
 .roller-item{
-  flex:0 0 34vw;
-  max-width:420px;
+  flex:0 0 68vw;
+  max-width:520px;
   min-width:260px;
   box-sizing:border-box;
   font-family:inherit;
   text-transform:none;
-  color:rgba(238,226,204,.34);
-  padding:20px 28px 24px;
+  color:var(--paper);
+  padding:22px 30px 25px;
+  border-top:1px solid rgba(238,226,204,.22);
+  border-bottom:1px solid rgba(238,226,204,.22);
   border-right:1px solid rgba(238,226,204,.14);
   text-align:center;
-  transform-origin:center center;
-  transition:
-    color .42s var(--ease),
-    transform .42s var(--ease),
-    opacity .42s var(--ease),
-    filter .42s var(--ease);
-  opacity:.42;
-  transform:scale(.78);
+  scroll-snap-align:center;
+  scroll-snap-stop:always;
+  opacity:1;
+  transform:none;
+  filter:none;
+  transition:opacity .25s var(--ease), transform .25s var(--ease);
 }
 
 .roller-item:first-child{
   border-left:1px solid rgba(238,226,204,.14);
 }
 
-.roller-item.near{
-  color:rgba(238,226,204,.5);
-  opacity:.62;
-  transform:scale(.86);
+.roller-item.current{
+  opacity:1;
+  transform:none;
 }
 
-.roller-item.current{
-  color:var(--paper);
-  opacity:1;
-  transform:scale(1);
-  filter:none;
+.roller-item.near{
+  opacity:.58;
+  transform:scale(.94);
 }
 
 .roller-product-type{
@@ -1087,7 +1097,7 @@ section{
 .roller-product-name{
   font-family:"Bebas Neue";
   font-size:clamp(34px,4vw,62px);
-  line-height:.88;
+  line-height:.9;
   text-transform:uppercase;
   margin-bottom:14px;
   white-space:normal;
@@ -1097,7 +1107,7 @@ section{
   color:var(--muted);
   font-size:9px;
   line-height:1.75;
-  max-width:340px;
+  max-width:500px;
   min-height:64px;
   margin:0 auto;
 }
@@ -1136,37 +1146,29 @@ section{
   display:none;
 }
 
-/* =========================================================
-   HORIZONTAL MENU RESPONSIVE
-========================================================= */
-
 @media(max-width:1100px){
-
-  .roller-item{
-    flex-basis:38vw;
+  .roller-track{
+    padding-inline:16vw;
   }
 
-  .menu-center{
-    padding-left:0;
-    padding-right:0;
+  .roller-item{
+    flex-basis:68vw;
   }
 }
 
 @media(max-width:850px){
-
-  .menu-panel{
-    grid-template-columns:1fr;
+  .menu-center{
+    padding:20px 0 24px;
   }
 
-  .menu-center{
-    min-height:0;
-    padding:24px 0 28px;
+  .roller-track{
+    padding-inline:11vw;
   }
 
   .roller-item{
-    flex-basis:60vw;
+    flex-basis:78vw;
     min-width:0;
-    padding:18px 18px 22px;
+    padding:20px 18px 23px;
   }
 
   .roller-product-name{
@@ -1177,23 +1179,14 @@ section{
     font-size:9px;
     min-height:76px;
   }
-
-  .roller-product-prices{
-    margin-top:16px;
-    padding-top:11px;
-    gap:7px 12px;
-  }
 }
 
 @media(max-width:560px){
-
   .menu{
-    overflow:hidden;
+    overflow-x:clip;
   }
 
   .menu-tabs{
-    flex-wrap:wrap;
-    overflow:visible;
     gap:6px;
   }
 
@@ -1202,26 +1195,26 @@ section{
     font-size:7px;
   }
 
-  .menu-panel{
+  .menu-panel,
+  .menu-center,
+  .roller{
     width:100%;
-    overflow:hidden;
-  }
-
-  .menu-center{
-    width:100%;
-    padding:20px 0 24px;
-    overflow:hidden;
+    max-width:100%;
+    overflow-x:hidden;
   }
 
   .roller{
-    width:100%;
-    overflow:hidden;
-    touch-action:pan-y;
+    overflow-x:auto;
+    touch-action:pan-x;
+  }
+
+  .roller-track{
+    padding-inline:9vw;
   }
 
   .roller-item{
-    flex-basis:72vw;
-    padding:16px 12px 20px;
+    flex-basis:82vw;
+    padding:18px 14px 21px;
   }
 
   .roller-product-name{
@@ -1235,7 +1228,6 @@ section{
   }
 
   .roller-product-prices{
-    display:flex;
     flex-direction:column;
     align-items:center;
     gap:5px;
@@ -3116,6 +3108,174 @@ section{
   }
   .roller-item.current{
     font-size:inherit !important;
+  }
+}
+
+
+/* =========================================================
+   WANTED MENU — SIMPLE STATIC GRID / NO HORIZONTAL SCROLL
+   Final override: menu only.
+========================================================= */
+html{overflow-x:hidden;}
+
+.menu{overflow-x:hidden;}
+.menu-wrap{width:min(1500px,94%);min-width:0;}
+.menu-tabs{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  overflow:visible;
+  padding:0 0 16px;
+  margin:0;
+}
+.menu-tab{
+  flex:1 1 auto;
+  min-width:90px;
+  padding:10px 12px;
+  font-size:8px;
+}
+.menu-panel{
+  width:100%;
+  max-width:100%;
+  min-width:0;
+  height:auto;
+  overflow:hidden;
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+}
+.menu-center{
+  width:100%;
+  min-width:0;
+  padding:18px 0;
+  display:block;
+  overflow:hidden;
+}
+.menu-center:before,.menu-center:after{display:none!important;}
+
+.roller{
+  width:100%;
+  max-width:100%;
+  min-width:0;
+  height:auto;
+  overflow:hidden!important;
+  display:block;
+  touch-action:auto;
+  user-select:text;
+  cursor:default;
+}
+.roller-track{
+  width:100%;
+  min-width:0;
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:0;
+  padding:0;
+}
+.roller-item,
+.roller-item.current,
+.roller-item.near{
+  width:auto;
+  min-width:0;
+  max-width:none;
+  flex:none;
+  opacity:1;
+  transform:none;
+  filter:none;
+  transition:none!important;
+  scroll-snap-align:none;
+  border:0;
+  border-right:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+  padding:16px 18px;
+  text-align:left;
+}
+.roller-item:nth-child(4n){border-right:0;}
+.roller-item:nth-last-child(-n+4){border-bottom:0;}
+.roller-product-type{font-size:7px;margin-bottom:7px;}
+.roller-product-name{font-size:clamp(23px,2.7vw,42px);line-height:.82;margin-bottom:8px;}
+.roller-product-description{font-size:8px;line-height:1.45;min-height:36px;margin:0;max-width:none;}
+.roller-product-prices{
+  border-top:1px solid var(--line);
+  margin-top:10px;
+  padding-top:8px;
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:space-between;
+  gap:4px 10px;
+}
+.roller-product-price{font-size:7px;gap:5px;}
+.roller-product-price strong{font-size:14px;}
+
+@media(max-width:850px){
+  .menu-wrap{width:94%;}
+  .menu-tabs{gap:5px;}
+  .menu-tab{min-width:0;padding:9px 9px;font-size:7px;}
+  .menu-center{padding:14px 0;}
+  .roller-track{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .roller-item,
+  .roller-item.current,
+  .roller-item.near{
+    padding:12px 10px;
+    border-right:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+  }
+  .roller-item:nth-child(4n){border-right:1px solid var(--line);}
+  .roller-item:nth-child(2n){border-right:0;}
+  .roller-item:nth-last-child(-n+4){border-bottom:1px solid var(--line);}
+  .roller-item:nth-last-child(-n+2){border-bottom:0;}
+  .roller-product-type{font-size:6px;margin-bottom:5px;}
+  .roller-product-name{font-size:clamp(18px,5.4vw,30px);margin-bottom:6px;}
+  .roller-product-description{font-size:7px;line-height:1.4;min-height:31px;}
+  .roller-product-prices{margin-top:7px;padding-top:6px;gap:3px 6px;}
+  .roller-product-price{font-size:6px;gap:3px;}
+  .roller-product-price strong{font-size:11px;}
+}
+
+@media(max-width:560px){
+  .menu{padding-top:22vw;padding-bottom:18vw;overflow-x:hidden;}
+  .menu-wrap{width:92%;}
+  .menu-tabs{gap:4px;padding-bottom:10px;}
+  .menu-tab{flex:1 1 calc(33.333% - 4px);padding:8px 5px;font-size:6px;min-width:0;}
+  .menu-panel,.menu-center,.roller,.roller-track{width:100%;max-width:100%;}
+  .roller-item,
+  .roller-item.current,
+  .roller-item.near{padding:10px 8px;}
+  .roller-product-name{font-size:clamp(16px,5.2vw,25px);}
+  .roller-product-description{font-size:6.5px;line-height:1.35;min-height:29px;}
+  .roller-product-price{font-size:5.5px;}
+  .roller-product-price strong{font-size:10px;}
+}
+
+
+/* MENU — PC + MOBILE HORIZONTAL RAIL */
+html,body{max-width:100%;overflow-x:hidden;}
+.menu-center{min-width:0;overflow:hidden;}
+#roller{
+  width:100%;max-width:100%;min-width:0;
+  overflow-x:auto !important;overflow-y:hidden !important;
+  display:block !important;white-space:nowrap;
+  overscroll-behavior-x:contain;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:thin;cursor:grab;touch-action:pan-x;
+}
+#roller.dragging{cursor:grabbing;}
+#rollerTrack{
+  display:flex !important;width:max-content;min-width:100%;
+  gap:18px;padding:8px 24px;box-sizing:border-box;
+}
+#rollerTrack .roller-item{
+  flex:0 0 clamp(280px,30vw,380px);
+  width:clamp(280px,30vw,380px);
+  max-width:calc(100vw - 48px);
+  white-space:normal;box-sizing:border-box;
+}
+@media(max-width:560px){
+  #roller{width:100%;overflow-x:auto !important;overflow-y:hidden !important;}
+  #rollerTrack{gap:12px;padding-left:18px;padding-right:18px;}
+  #rollerTrack .roller-item{
+    flex-basis:calc(100vw - 52px);
+    width:calc(100vw - 52px);
+    max-width:calc(100vw - 52px);
   }
 }
 
@@ -5060,7 +5220,7 @@ const menus = {
 };
 
 /* =========================================================
-   MENU — HORIZONTAL SWIPE CAROUSEL
+   MENU — SIMPLE STATIC GRID
 ========================================================= */
 
 const tabsEl = document.getElementById("menuTabs");
@@ -5075,268 +5235,132 @@ let activeCategory = "pizzas";
 let activeProduct = 0;
 
 Object.keys(menus).forEach((key)=>{
-
   const button = document.createElement("button");
-
-  button.className =
-    "menu-tab" +
-    (key === activeCategory ? " active" : "");
-
+  button.className = "menu-tab" + (key === activeCategory ? " active" : "");
   button.textContent = menus[key].label;
 
   button.addEventListener("click",()=>{
-
     activeCategory = key;
     activeProduct = 0;
-
-    document.querySelectorAll(".menu-tab")
-      .forEach(btn=>btn.classList.remove("active"));
-
+    document.querySelectorAll(".menu-tab").forEach(btn=>btn.classList.remove("active"));
     button.classList.add("active");
-
     renderMenu();
-
   });
 
   tabsEl.appendChild(button);
-
 });
 
-function updateCarouselPosition(animate=true){
+function centerProduct(index, behavior="smooth"){
+  const item = rollerTrackEl.children[index];
+  if(!item) return;
+  const target = item.offsetLeft - (rollerEl.clientWidth - item.offsetWidth) / 2;
+  rollerEl.scrollTo({left:Math.max(0,target),behavior});
+}
 
-  const items = [...rollerTrackEl.children];
-  const current = items[activeProduct];
-
-  if(!current) return;
-
-  const itemWidth = current.getBoundingClientRect().width;
-  const centerOffset =
-    (rollerEl.clientWidth - itemWidth) / 2;
-
-  const targetX =
-    centerOffset - (activeProduct * itemWidth);
-
-  rollerTrackEl.style.transition =
-    animate
-      ? "transform .42s cubic-bezier(.22,.8,.25,1)"
-      : "none";
-
-  rollerTrackEl.style.transform =
-    `translate3d(${targetX}px,0,0)`;
-
-  items.forEach((node,index)=>{
-
-    const distance = index - activeProduct;
-    const abs = Math.abs(distance);
-
-    node.classList.toggle(
-      "current",
-      index === activeProduct
-    );
-
-    node.classList.toggle(
-      "near",
-      abs === 1
-    );
-
-    if(index === activeProduct){
-      node.style.opacity = "1";
-      node.style.transform = "scale(1)";
-    }else if(abs === 1){
-      node.style.opacity = ".62";
-      node.style.transform = "scale(.86)";
-    }else{
-      node.style.opacity = ".28";
-      node.style.transform = "scale(.78)";
-    }
-
-  });
-
-  if(sideNumberEl){
-    sideNumberEl.textContent =
-      String(activeProduct+1).padStart(2,"0");
-  }
-
-  if(sideEyebrowEl){
-    sideEyebrowEl.textContent =
-      menus[activeCategory].label;
-  }
-
-  if(sideCopyEl){
-    sideCopyEl.textContent =
-      menus[activeCategory].copy;
-  }
+function updateMenuMeta(){
+  if(sideNumberEl) sideNumberEl.textContent=String(activeProduct+1).padStart(2,"0");
+  if(sideEyebrowEl) sideEyebrowEl.textContent=menus[activeCategory].label;
+  if(sideCopyEl) sideCopyEl.textContent=menus[activeCategory].copy;
 }
 
 function renderMenu(){
-
-  const category = menus[activeCategory];
-  const items = category.items;
-
-  if(activeProduct >= items.length){
-    activeProduct = items.length - 1;
-  }
-
-  rollerTrackEl.innerHTML = "";
+  const category=menus[activeCategory];
+  const items=category.items;
+  activeProduct=Math.min(activeProduct,Math.max(0,items.length-1));
+  rollerTrackEl.innerHTML="";
 
   items.forEach((item,index)=>{
+    const el=document.createElement("article");
+    el.className="roller-item";
 
-    const el = document.createElement("article");
-
-    el.className = "roller-item";
-
-    const pricesHTML = item.prices.map(price=>`
+    const pricesHTML=item.prices.map(price=>`
       <div class="roller-product-price">
-        <span>${price[0]}</span>
-        <strong>${price[1]}</strong>
+        <span>${price[0]}</span><strong>${price[1]}</strong>
       </div>
     `).join("");
 
-    el.innerHTML = `
+    el.innerHTML=`
       <div class="roller-product-type">${category.label}</div>
-
-      <div class="roller-product-name">
-        ${item.name}
-      </div>
-
-      <div class="roller-product-description">
-        ${item.description}
-      </div>
-
-      <div class="roller-product-prices">
-        ${pricesHTML}
-      </div>
+      <div class="roller-product-name">${item.name}</div>
+      <div class="roller-product-description">${item.description}</div>
+      <div class="roller-product-prices">${pricesHTML}</div>
     `;
 
     el.addEventListener("click",()=>{
-
-      if(index !== activeProduct){
-        activeProduct = index;
-        updateCarouselPosition();
-      }
-
+      activeProduct=index;
+      updateMenuMeta();
+      centerProduct(index);
     });
 
     rollerTrackEl.appendChild(el);
-
   });
 
-  updateCarouselPosition(false);
+  updateMenuMeta();
+  requestAnimationFrame(()=>centerProduct(activeProduct,"auto"));
 }
 
-function moveProduct(direction){
+/* PC left-click drag */
+let mouseDragging=false;
+let mouseStartX=0;
+let mouseStartScroll=0;
 
-  const total =
-    menus[activeCategory].items.length;
-
-  const next =
-    activeProduct + direction;
-
-  if(next < 0 || next >= total) return;
-
-  activeProduct = next;
-  updateCarouselPosition();
-}
-
-/* =========================================================
-   HORIZONTAL TOUCH / MOUSE DRAG
-========================================================= */
-
-let dragging = false;
-let dragStartX = 0;
-let dragLastX = 0;
-let dragDistance = 0;
-
-rollerEl.addEventListener("pointerdown",(event)=>{
-
-  dragging = true;
-  dragStartX = event.clientX;
-  dragLastX = event.clientX;
-  dragDistance = 0;
-
+rollerEl.addEventListener("mousedown",(event)=>{
+  if(event.button!==0)return;
+  mouseDragging=true;
+  mouseStartX=event.clientX;
+  mouseStartScroll=rollerEl.scrollLeft;
   rollerEl.classList.add("dragging");
-  rollerEl.setPointerCapture(event.pointerId);
-
-  rollerTrackEl.style.transition = "none";
-
+  event.preventDefault();
 });
 
-rollerEl.addEventListener("pointermove",(event)=>{
-
-  if(!dragging) return;
-
-  const delta = event.clientX - dragLastX;
-
-  dragDistance += event.clientX - dragLastX;
-  dragLastX = event.clientX;
-
-  const items = [...rollerTrackEl.children];
-  const current = items[activeProduct];
-
-  if(!current) return;
-
-  const itemWidth = current.getBoundingClientRect().width;
-  const centerOffset =
-    (rollerEl.clientWidth - itemWidth) / 2;
-
-  const baseX =
-    centerOffset - (activeProduct * itemWidth);
-
-  rollerTrackEl.style.transform =
-    `translate3d(${baseX + dragDistance}px,0,0)`;
-
+window.addEventListener("mousemove",(event)=>{
+  if(!mouseDragging)return;
+  rollerEl.scrollLeft=mouseStartScroll-(event.clientX-mouseStartX);
 });
 
-function finishDrag(){
-
-  if(!dragging) return;
-
-  dragging = false;
+window.addEventListener("mouseup",()=>{
+  mouseDragging=false;
   rollerEl.classList.remove("dragging");
+});
 
-  const threshold = Math.max(35, rollerEl.clientWidth * .08);
-
-  if(Math.abs(dragDistance) >= threshold){
-
-    if(dragDistance < 0){
-      moveProduct(1);
-    }else{
-      moveProduct(-1);
-    }
-
-  }else{
-
-    updateCarouselPosition();
-
-  }
-
-  dragDistance = 0;
-}
-
-rollerEl.addEventListener("pointerup",finishDrag);
-rollerEl.addEventListener("pointercancel",finishDrag);
-/* Mouse wheel / trackpad support */
+/* PC wheel scrolls the menu horizontally */
 rollerEl.addEventListener("wheel",(event)=>{
+  const amount=Math.abs(event.deltaY)>Math.abs(event.deltaX)?event.deltaY:event.deltaX;
+  if(!amount)return;
 
-  if(Math.abs(event.deltaX) < Math.abs(event.deltaY)){
+  const canMoveLeft=rollerEl.scrollLeft>0;
+  const canMoveRight=rollerEl.scrollLeft < rollerEl.scrollWidth-rollerEl.clientWidth-1;
+
+  if((amount<0&&canMoveLeft)||(amount>0&&canMoveRight)){
     event.preventDefault();
+    rollerEl.scrollLeft+=amount;
   }
-
-  if(Math.abs(event.deltaX) > 8){
-    event.preventDefault();
-    moveProduct(event.deltaX > 0 ? 1 : -1);
-    return;
-  }
-
-  if(Math.abs(event.deltaY) > 8){
-    event.preventDefault();
-    moveProduct(event.deltaY > 0 ? 1 : -1);
-  }
-
 },{passive:false});
 
+/* Touch uses native horizontal scrolling */
+let menuScrollTimer;
+rollerEl.addEventListener("scroll",()=>{
+  clearTimeout(menuScrollTimer);
+  menuScrollTimer=setTimeout(()=>{
+    const items=[...rollerTrackEl.children];
+    if(!items.length)return;
+
+    const center=rollerEl.scrollLeft+rollerEl.clientWidth/2;
+    let closest=0,best=Infinity;
+
+    items.forEach((item,index)=>{
+      const itemCenter=item.offsetLeft+item.offsetWidth/2;
+      const distance=Math.abs(itemCenter-center);
+      if(distance<best){best=distance;closest=index;}
+    });
+
+    activeProduct=closest;
+    updateMenuMeta();
+  },80);
+});
+
 window.addEventListener("resize",()=>{
-  updateCarouselPosition(false);
+  requestAnimationFrame(()=>centerProduct(activeProduct,"auto"));
 });
 
 renderMenu();
