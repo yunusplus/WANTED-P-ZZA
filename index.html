@@ -380,6 +380,10 @@ section{
   color:var(--gold);
   letter-spacing:.3em;
   text-transform:uppercase;
+  display:block;
+  position:relative;
+  z-index:5;
+  transform:translateY(-14px);
 }
 
 .display{
@@ -3166,6 +3170,295 @@ html,body{max-width:100%;overflow-x:hidden;}
   box-shadow:0 7px 18px rgba(0,0,0,.28) !important;
 }
 </style>
+
+<style>
+/* FINAL FIX — mobile headings and SU price */
+.drinks-heading .eyebrow,
+.location-content > .eyebrow{
+  position:relative;
+  z-index:10;
+  display:block;
+  margin-bottom:18px;
+  transform:none !important;
+}
+
+.drinks-heading h2,
+.location-content h2{
+  position:relative;
+  z-index:2;
+}
+
+/* SU satırındaki ikinci 20 TL alanını gizle; fiyat sağda kalsın */
+.drink-size{
+  display:none !important;
+}
+
+.drink-row{
+  grid-template-columns:35px minmax(0,1fr) auto !important;
+  align-items:center;
+}
+
+.drink-price{
+  white-space:nowrap;
+  min-width:max-content;
+  line-height:1;
+}
+
+@media(max-width:760px){
+  .drinks-heading .eyebrow,
+  .location-content > .eyebrow{
+    margin-bottom:16px;
+    top:0;
+  }
+
+  .drinks-heading h2,
+  .location-content h2{
+    margin-top:0 !important;
+  }
+}
+</style>
+
+<style>
+/* Alternating outline / solid display headings */
+.campaign h2 .campaign-alt-outline,
+.gallery-title .gallery-alt-outline{
+  color:transparent !important;
+  -webkit-text-stroke:1.5px var(--paper) !important;
+  text-shadow:none !important;
+}
+
+.franchise h2 .franchise-alt-outline{
+  color:transparent !important;
+  -webkit-text-stroke:1.5px #090807 !important;
+  text-shadow:none !important;
+}
+</style>
+
+
+<style>
+/* ===== Typography refinements requested ===== */
+
+/* Small numbered eyebrow headings: nudge upward without moving main heading */
+.section-heading > div > .eyebrow{
+  transform: translateY(-6px);
+}
+.drinks-heading .eyebrow{
+  transform: translateY(-14px) !important;
+}
+
+/* Give stacked words more breathing room; move the eyebrow with the same amount. */
+.size-heading h2{
+  line-height:.82 !important;
+}
+.size-heading h2 .size-title-gap{
+  display:inline-block;
+  margin-top:.14em;
+}
+.size-heading .eyebrow{
+  transform:translateY(-.18em);
+}
+
+.panzerotti .section-heading h2{
+  line-height:.82 !important;
+}
+.panzerotti .section-heading h2 .panzerotti-title-gap{
+  display:inline-block;
+  margin-top:.14em;
+}
+.panzerotti .section-heading > div > .eyebrow{
+  transform:translateY(-.18em);
+}
+
+/* Franchise: keep everything inside the mobile viewport and centered */
+.franchise .franchise-grid > .reveal:first-child{
+  text-align:center;
+}
+.franchise h2{
+  font-size:clamp(74px,10vw,150px) !important;
+  line-height:.68 !important;
+  white-space:nowrap;
+  letter-spacing:-.02em;
+}
+.franchise-right h3{
+  line-height:.82 !important;
+}
+.franchise .franchise-alt-outline{
+  color:transparent !important;
+  -webkit-text-stroke:1.5px #090807 !important;
+}
+
+/* Location title: centered and constrained */
+.location-content{
+  overflow:hidden;
+}
+.location-content h2{
+  font-size:clamp(74px,10vw,150px) !important;
+  line-height:.76 !important;
+  text-align:center;
+  white-space:nowrap;
+}
+.location-outline{
+  color:transparent !important;
+  -webkit-text-stroke:1.5px var(--paper) !important;
+}
+
+/* Existing generic outline remains the cream outline on dark sections. */
+.outline{
+  text-shadow:none !important;
+}
+
+/* Mobile tuning */
+@media(max-width:560px){
+  .story-title{
+    font-size:25vw !important;
+    line-height:.78 !important;
+  }
+
+  .philosophy-title{
+    font-size:25vw !important;
+    line-height:.78 !important;
+  }
+
+  .section-heading > div > .eyebrow{
+    transform:translateY(-6px) !important;
+  }
+
+  .size-heading h2{
+    font-size:25vw !important;
+    line-height:.84 !important;
+  }
+  .size-heading .eyebrow{
+    transform:translateY(-12px) !important;
+  }
+
+  .panzerotti .section-heading h2{
+    font-size:25vw !important;
+    line-height:.84 !important;
+  }
+  .panzerotti .section-heading > div > .eyebrow{
+    transform:translateY(-12px) !important;
+  }
+
+  .food-feature h2{
+    font-size:27vw !important;
+    line-height:.78 !important;
+  }
+
+  .sufle-title{
+    font-size:28vw !important;
+    line-height:.78 !important;
+  }
+
+  .aperitif h2{
+    font-size:27vw !important;
+    line-height:.78 !important;
+  }
+
+  .drinks-heading .eyebrow{
+    transform:translateY(-16px) !important;
+  }
+
+  .drinks-heading h2{
+    font-size:28vw !important;
+    line-height:.78 !important;
+  }
+
+  .franchise h2{
+    font-size:17vw !important;
+    line-height:.84 !important;
+    white-space:nowrap !important;
+    text-align:center;
+    letter-spacing:-.025em;
+  }
+
+  .franchise .franchise-grid{
+    gap:10vw;
+  }
+
+  .franchise-right h3{
+    font-size:18vw !important;
+    line-height:.88 !important;
+  }
+
+  .location-content{
+    padding:14vw 20px !important;
+  }
+
+  .location-content > .eyebrow{
+    transform:translateY(-14px) !important;
+    text-align:center;
+  }
+
+  .location-content h2{
+    font-size:17vw !important;
+    line-height:.88 !important;
+    white-space:nowrap !important;
+  }
+}
+</style>
+
+
+<style>
+/* FINAL requested-only adjustments */
+.food-feature .solid-last{
+  color:inherit !important;
+  -webkit-text-stroke:0 !important;
+}
+.aperitif h2 .sidequest-outline{
+  color:transparent !important;
+  -webkit-text-stroke:1.5px #090807 !important;
+  text-shadow:none !important;
+}
+.pizza-menus-eyebrow{
+  position:relative;
+  top:-8px;
+}
+</style>
+
+
+<style>
+/* SON İSTEK — yalnızca 03 ve 04 */
+#menu .section-heading > div > .eyebrow{
+  transform:translateY(-14px) !important;
+}
+
+@media(max-width:560px){
+  .size-heading{
+    display:block !important;
+  }
+
+  .size-heading > div{
+    width:100%;
+  }
+
+  .size-heading > p{
+    width:100% !important;
+    max-width:none !important;
+    margin-top:18px !important;
+    white-space:nowrap !important;
+    font-size:8px !important;
+    line-height:1.2 !important;
+    letter-spacing:-.15px !important;
+    overflow:visible !important;
+  }
+}
+</style>
+
+
+<style>
+/* SON İSTEK — yalnızca 03 bölümü */
+#menu .section-heading > div > .eyebrow{
+  position:relative !important;
+  top:-28px !important;
+  transform:none !important;
+}
+
+/* 03 bölümündeki sağ açıklamayı gizle */
+#menu .section-heading > p{
+  display:none !important;
+}
+</style>
+
 </head>
 
 <body>
@@ -3350,9 +3643,9 @@ html,body{max-width:100%;overflow-x:hidden;}
       <div class="eyebrow">01 / The Story</div>
 
       <h2 class="story-title">
-        BİR<br>
+        <span class="outline">BİR</span><br>
         ŞEHİR.<br>
-        BİR<br>
+        <span class="outline">BİR</span><br>
         HİKAYE.
       </h2>
 
@@ -3396,9 +3689,9 @@ html,body{max-width:100%;overflow-x:hidden;}
     <div>
       <div class="eyebrow">02 / Why Wanted</div>
       <h2 class="philosophy-title">
-        FARKLI<br>
+        <span class="outline">FARKLI</span><br>
         OLMAK<br>
-        YETMEZ.
+        <span class="outline">YETMEZ.</span>
       </h2>
     </div>
 
@@ -3455,11 +3748,6 @@ html,body{max-width:100%;overflow-x:hidden;}
         <div class="eyebrow">03 / The Wanted Menu</div>
         <h2>MENÜ</h2>
       </div>
-
-      <p>
-        Ürünlerin arasında dolaş.
-        Fare tekerleğini kullan veya ürün alanını yukarı-aşağı sürükle.
-      </p>
     </div>
 
     <div class="menu-tabs" id="menuTabs"></div>
@@ -3520,7 +3808,7 @@ html,body{max-width:100%;overflow-x:hidden;}
 
       <div>
         <div class="eyebrow" style="color:#841c16">04 / Pizza Sizes</div>
-        <h2>BOYUTUNU<br>SEÇ.</h2>
+        <h2>BOYUTUNU<br><span class="size-title-gap">SEÇ.</span></h2>
       </div>
 
       <p>
@@ -3573,7 +3861,7 @@ html,body{max-width:100%;overflow-x:hidden;}
     <div class="eyebrow">05 / Straight From The Oven</div>
 
     <h2>
-      HAMUR.<br>
+      <span class="outline">HAMUR.</span><br>
       ATEŞ.<br>
       <span class="outline">LEZZET.</span>
     </h2>
@@ -3599,7 +3887,7 @@ html,body{max-width:100%;overflow-x:hidden;}
 
       <div>
         <div class="eyebrow">06 / Panzerotti®</div>
-        <h2>KAPAT.<br>ÇITIRLAT.</h2>
+        <h2>KAPAT.<br><span class="panzerotti-title-gap">ÇITIRLAT.</span></h2>
       </div>
 
       <p>
@@ -3763,9 +4051,9 @@ html,body{max-width:100%;overflow-x:hidden;}
     <div class="eyebrow">08 / Closed Burger</div>
 
     <h2>
-      BURGERİ<br>
+      <span class="outline">BURGERİ</span><br>
       KAPATTIK.<br>
-      <span class="outline">OLAY BİTTİ.</span>
+      <span class="outline">OLAY</span> <span class="solid-last">BİTTİ.</span>
     </h2>
 
     <p class="food-feature-copy">
@@ -3862,7 +4150,7 @@ html,body{max-width:100%;overflow-x:hidden;}
     <div class="eyebrow">09 / Dessert Department</div>
 
     <h2 class="sufle-title">
-      SUFLE<br>
+      <span class="outline">SUFLE</span><br>
       TAKINTISI.
     </h2>
 
@@ -3939,7 +4227,7 @@ html,body{max-width:100%;overflow-x:hidden;}
     <div class="eyebrow">10 / Side Quest</div>
 
     <h2>
-      KIZARTMA<br>
+      <span class="sidequest-outline">KIZARTMA</span><br>
       SEPETİ.
     </h2>
 
@@ -4014,7 +4302,7 @@ html,body{max-width:100%;overflow-x:hidden;}
 
       <div>
         <div class="eyebrow">11 / Drinks</div>
-        <h2>İÇECEK<br>İSTASYONU.</h2>
+        <h2><span class="outline">İÇECEK</span><br>İSTASYONU.</h2>
       </div>
 
       <p>
@@ -4174,7 +4462,7 @@ html,body{max-width:100%;overflow-x:hidden;}
     <div class="extra-column reveal">
 
       <div class="eyebrow">13 / Sauces</div>
-      <h3>SOS<br>ARŞİVİ</h3>
+      <h3><span class="outline">SOS</span><br>ARŞİVİ</h3>
 
       <div class="extra-list">
 
@@ -4195,7 +4483,7 @@ html,body{max-width:100%;overflow-x:hidden;}
     <div class="extra-column reveal reveal-delay-1">
 
       <div class="eyebrow">14 / Extras</div>
-      <h3>EKSTRA<br>VURUŞ</h3>
+      <h3><span class="outline">EKSTRA</span><br>VURUŞ</h3>
 
       <div class="extra-list">
 
@@ -4231,8 +4519,8 @@ html,body{max-width:100%;overflow-x:hidden;}
     <div class="section-heading reveal">
 
       <div>
-        <div class="eyebrow">15 / Pizza Menus</div>
-        <h2>MENÜ<br>AVCILARI.</h2>
+        <div class="eyebrow pizza-menus-eyebrow">15 / PIZZA MENUS</div>
+        <h2><span class="outline">MENÜ</span><br>AVCILARI.</h2>
       </div>
 
       <p>
@@ -4346,9 +4634,9 @@ html,body{max-width:100%;overflow-x:hidden;}
     <div class="eyebrow">16 / Daily Hunt</div>
 
     <h2>
-      GÜNÜN<br>
+      <span class="outline campaign-alt-outline">GÜNÜN</span><br>
       AVINI<br>
-      YAKALA.
+      <span class="outline campaign-alt-outline">YAKALA.</span>
     </h2>
 
     <p class="campaign-copy">
@@ -4397,8 +4685,9 @@ html,body{max-width:100%;overflow-x:hidden;}
     <div class="eyebrow">17 / Visual Archive</div>
 
     <h2 class="gallery-title">
-      WANTED<br>
-      <span class="outline">AFTER DARK.</span>
+      <span class="outline gallery-alt-outline">WANTED</span><br>
+      AFTER<br>
+      <span class="outline gallery-alt-outline">DARK.</span>
     </h2>
 
     <div class="gallery-track">
@@ -4464,9 +4753,9 @@ html,body{max-width:100%;overflow-x:hidden;}
         <div class="eyebrow">18 / Franchise</div>
 
         <h2>
-          WANTED'I<br>
+          <span class="franchise-alt-outline">WANTED'I</span><br>
           BİRLİKTE<br>
-          BÜYÜTELİM.
+          <span class="franchise-alt-outline">BÜYÜTELİM.</span>
         </h2>
 
         <p>
@@ -4480,9 +4769,9 @@ html,body{max-width:100%;overflow-x:hidden;}
       <div class="franchise-right reveal reveal-delay-1">
 
         <h3>
-          HER<br>
+          <span class="franchise-alt-outline">HER</span><br>
           ADIMDA<br>
-          YANINDA.
+          <span class="franchise-alt-outline">YANINDA.</span>
         </h3>
 
         <p>
@@ -4546,7 +4835,7 @@ html,body{max-width:100%;overflow-x:hidden;}
     <div class="eyebrow">19 / Come Find Us</div>
 
     <h2>
-      BAĞLAR'DA<br>
+      <span class="location-outline">BAĞLAR'DA</span><br>
       GÖRÜŞÜRÜZ.
     </h2>
 
@@ -4604,7 +4893,7 @@ html,body{max-width:100%;overflow-x:hidden;}
         <div class="eyebrow">20 / Contact</div>
 
         <h2 class="contact-title">
-          BUL<br>
+          <span class="outline">BUL</span><br>
           BİZİ.
         </h2>
 
